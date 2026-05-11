@@ -25,4 +25,4 @@ Descargar la extension:
 Ejecuta los siguientes comandos: 
 - npm install
 - npm start
-Para ejecutar este escribe npm run dev
+- Para ejecutar este escribe npm run dev
