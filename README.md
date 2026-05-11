@@ -54,9 +54,7 @@ Descargar la extension:
 npm install
 ```
 Al descargar un proyecto, la carpeta node_modules no suele estar incluida porque es muy pesada. Debes regenerarla usando el gestor de paquetes que prefieras:
-```
- npm start
-```
+
 Una vez que termine la instalación, puedes iniciar el servidor local. El comando exacto depende de cómo se haya creado el proyecto (Vite o Create React App), pero los estándares son:
 
 ## Para realizar la ejecucion del proyecto se debe escribir el comando:
