@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables from Figma design */
+:root {
+  --primario: #0051a8;
+  --primario-darken-1: #004690; /* Approximately 10% darker */
+  --blanco-base: #ffffff;
+  --icon-text-button: #ffffff;
+  --spacing-s: 15.993px;
+  --spacing-xs: 7.996px;
+  --background-button: #0051a8;
+  --focus-button: #ffbe5c;
+}
