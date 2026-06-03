@@ -10,6 +10,14 @@ export function createApp() {
   app.use(cors({ origin: env.corsOrigin, credentials: true }));
   app.use(express.json());
 
+  app.use((error, req, res, next) => {
+    if (error instanceof SyntaxError && 'body' in error) {
+      return res.status(400).json({ error: 'INVALID_JSON_BODY' });
+    }
+
+    return next(error);
+  });
+
   app.use('/api', apiRoutes);
 
   app.use((req, res) => {

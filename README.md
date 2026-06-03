@@ -441,3 +441,89 @@ Password: Funcionario123
 - Crear pruebas unitarias e integración.
 - Agregar carga real de archivos.
 - Agregar panel administrativo para funcionarios.
+
+## Segundo Avance: Datos, Pruebas y Estabilidad
+
+Este avance agrega el material necesario para manejar datos y verificar que el backend responda correctamente.
+
+### Modelo relacional PostgreSQL
+
+Archivos:
+
+```txt
+database/postgresql/schema.sql
+database/postgresql/seed.sql
+docs/modelo-relacional.md
+```
+
+Tablas principales:
+
+- `users`
+- `tramites`
+- `tramite_documentos`
+- `tramite_mensajes`
+- `notifications`
+- `audit_events`
+
+Crear base local:
+
+```bash
+createdb dom_santo_domingo
+psql -d dom_santo_domingo -f database/postgresql/schema.sql
+psql -d dom_santo_domingo -f database/postgresql/seed.sql
+```
+
+Variable sugerida:
+
+```txt
+DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
+```
+
+### Pruebas Postman
+
+Coleccion:
+
+```txt
+postman/DOM_Santo_Domingo_API.postman_collection.json
+```
+
+La coleccion valida:
+
+- Healthcheck.
+- JWKS.
+- Login usuario y funcionario.
+- Registro.
+- Token JWT en rutas protegidas.
+- Control de rol funcionario.
+- Listado y creacion de tramites.
+- Errores esperados sin token, login invalido y tramite sin tipo.
+
+Antes de ejecutarla:
+
+```bash
+npm run dev:api
+```
+
+Luego importar la coleccion en Postman y ejecutar los requests en orden.
+
+### Documentacion tecnica
+
+Endpoints:
+
+```txt
+docs/api-endpoints.md
+```
+
+Modelo de datos:
+
+```txt
+docs/modelo-relacional.md
+```
+
+### Estabilidad backend
+
+Se agregaron respuestas controladas para:
+
+- JSON mal formado.
+- Creacion de tramite sin tipo.
+- Errores internos no expuestos como detalle tecnico al cliente.

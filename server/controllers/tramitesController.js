@@ -5,12 +5,19 @@ export function listTramites(req, res) {
 }
 
 export function createTramite(req, res) {
+  const { tipo, descripcion } = req.body;
+
+  if (!tipo) {
+    throw new Error('TRAMITE_TYPE_REQUIRED');
+  }
+
   const tramite = {
     id: `#${Date.now()}`,
+    tipo,
     estado: 'Nueva',
     fechaIngreso: new Date().toISOString(),
     solicitante: req.user.name,
-    ...req.body,
+    descripcion: descripcion || '',
   };
 
   tramites.push(tramite);
