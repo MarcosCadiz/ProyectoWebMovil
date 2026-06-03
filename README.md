@@ -93,6 +93,22 @@ El propósito de la plataforma es entregar una solución digital que permita:
 └── .env.example
 ```
 
+## Prerrequisitos
+
+Antes de instalar el proyecto, asegúrate de tener:
+
+- Node.js en version LTS.
+- npm instalado junto con Node.js.
+- Visual Studio Code u otro editor de codigo.
+- Git para clonar y versionar el repositorio.
+
+Puedes verificar Node.js y npm con:
+
+```bash
+node -v
+npm -v
+```
+
 ## Instalación
 
 Clonar el repositorio y entrar a la carpeta del proyecto:
