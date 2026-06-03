@@ -1,0 +1,260 @@
+.review-header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+}
+
+.review-header h1 {
+  margin: 8px 0 4px;
+}
+
+.review-header p {
+  margin: 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.review-panel {
+  min-height: 563px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.review-panel.soft {
+  background: #f8fafc;
+}
+
+.section-title {
+  display: inline-block;
+  border-bottom: 2px solid #0f69b4;
+  padding-bottom: 6px;
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.info-list p {
+  margin: 0 0 14px;
+  font-size: 14px;
+}
+
+.doc-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.doc-item {
+  min-height: 54px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.doc-item button {
+  border: 1px solid #0f69b4;
+  background: #fff;
+  color: #0f69b4;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.check-list {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.check-list label {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.review-textarea,
+.chat-input textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+}
+
+.review-textarea {
+  height: 100px;
+  padding: 10px;
+  resize: none;
+  font-size: 13px;
+}
+
+.review-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.action-warning,
+.action-danger,
+.action-success {
+  height: 44px;
+  border: 0;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.action-warning {
+  background: #ffc107;
+  color: #333;
+}
+
+.action-danger {
+  background: #e31837;
+  color: #fff;
+}
+
+.action-success {
+  background: #28a745;
+  color: #fff;
+}
+
+.chat-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chat-header {
+  background: #f8fafc;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 30px;
+}
+
+.chat-header h1 {
+  margin: 0 0 8px;
+  color: #0f69b4;
+  font-size: 20px;
+}
+
+.chat-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.chat-messages {
+  min-height: 390px;
+  padding: 30px;
+}
+
+.message {
+  max-width: 572px;
+  margin-bottom: 20px;
+}
+
+.message.mine {
+  margin-left: auto;
+}
+
+.message-meta {
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.message.mine .message-meta {
+  text-align: right;
+}
+
+.bubble {
+  background: #f3f4f5;
+  border: 1px solid #ccc;
+  border-radius: 8px 8px 8px 0;
+  padding: 16px;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.message.mine .bubble {
+  background: #0f69b4;
+  color: #fff;
+  border-color: #0f69b4;
+  border-radius: 8px 8px 0 8px;
+}
+
+.chat-input {
+  background: #f8fafc;
+  border-top: 1px solid #ccc;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 14px;
+}
+
+.chat-input textarea {
+  height: 82px;
+  resize: none;
+  padding: 15px;
+}
+
+.chat-input button {
+  background: #0f69b4;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.upload-card {
+  width: min(878px, calc(100% - 80px));
+  margin: 30px auto 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.upload-drop {
+  border: 2px dashed #b3d4f0;
+  border-radius: 8px;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: #f8fafc;
+  color: #555;
+  margin: 24px 0;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 980px) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}
