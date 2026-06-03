@@ -16,6 +16,10 @@ export default function LoginFuncionario() {
       setIsLoading(true);
       const session = await login(credentials);
       saveSession(session);
+      if (session.user.role !== 'funcionario') {
+        navigate(paths.userMenu);
+        return;
+      }
       navigate(paths.staffMenu);
     } catch {
       setError('Credenciales inválidas');
@@ -29,7 +33,6 @@ export default function LoginFuncionario() {
       <BrandPanel variant="teal" />
       <section className="login-side">
         <LoginForm
-          demoCredentials={{ rut: '9.876.543-2', password: 'Funcionario123' }}
           error={error}
           isLoading={isLoading}
           onSubmit={handleSubmit}

@@ -142,6 +142,11 @@
   margin-top: 70px;
 }
 
+.login-links-single {
+  justify-content: center;
+  margin-top: 28px;
+}
+
 .login-links a {
   color: #0f69b4;
   font-size: 14px;

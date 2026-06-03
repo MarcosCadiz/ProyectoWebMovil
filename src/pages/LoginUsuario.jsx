@@ -16,6 +16,10 @@ export default function LoginUsuario() {
       setIsLoading(true);
       const session = await login(credentials);
       saveSession(session);
+      if (session.user.role !== 'usuario') {
+        navigate(paths.staffMenu);
+        return;
+      }
       navigate(paths.userMenu);
     } catch {
       setError('Credenciales inválidas');
@@ -29,10 +33,10 @@ export default function LoginUsuario() {
       <BrandPanel />
       <section className="login-side">
         <LoginForm
-          demoCredentials={{ rut: '12.345.678-9', password: 'Usuario123' }}
           error={error}
           isLoading={isLoading}
           onSubmit={handleSubmit}
+          registerPath={paths.registerUser}
         />
       </section>
     </main>
