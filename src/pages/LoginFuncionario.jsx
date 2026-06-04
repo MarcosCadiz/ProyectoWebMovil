@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BrandPanel from '../components/layout/BrandPanel';
 import LoginForm from '../features/auth/LoginForm';
 import { paths } from '../routes/paths';
-import { login, saveSession } from '../services/authApi';
+import { clearSession, login, saveSession } from '../services/authApi';
 
 export default function LoginFuncionario() {
   const navigate = useNavigate();
@@ -15,14 +15,17 @@ export default function LoginFuncionario() {
       setError('');
       setIsLoading(true);
       const session = await login(credentials);
-      saveSession(session);
+
       if (session.user.role !== 'funcionario') {
-        navigate(paths.userMenu);
+        clearSession();
+        setError('Estas credenciales pertenecen a un usuario. Ingresa desde el acceso usuario.');
         return;
       }
+
+      saveSession(session);
       navigate(paths.staffMenu);
     } catch {
-      setError('Credenciales inválidas');
+      setError('Credenciales invalidas');
     } finally {
       setIsLoading(false);
     }
@@ -36,6 +39,7 @@ export default function LoginFuncionario() {
           error={error}
           isLoading={isLoading}
           onSubmit={handleSubmit}
+          registerPath={paths.register}
         />
       </section>
     </main>

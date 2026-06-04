@@ -4,8 +4,10 @@ export function me(req, res) {
   return res.json({ user: req.user });
 }
 
-export function users(req, res) {
+export async function users(req, res) {
+  const allUsers = await listUsers();
+
   return res.json({
-    users: listUsers().map(sanitizeUser),
+    users: allUsers.map(sanitizeUser),
   });
 }

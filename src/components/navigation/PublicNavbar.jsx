@@ -1,9 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { publicUser } from '../../data/mockData';
 import { paths } from '../../routes/paths';
+import { clearSession } from '../../services/authSession';
 
 export default function PublicNavbar({ user = publicUser }) {
   const navigate = useNavigate();
+
+  function handleLogout() {
+    clearSession();
+    navigate(paths.home);
+  }
 
   return (
     <header className="topbar topbar-blue">
@@ -14,7 +20,7 @@ export default function PublicNavbar({ user = publicUser }) {
           <span className="badge">2</span>
         </button>
         <span>{user}</span>
-        <button className="logout-button" onClick={() => navigate(paths.home)}>Cerrar Sesión</button>
+        <button className="logout-button" onClick={handleLogout}>Cerrar Sesion</button>
       </div>
     </header>
   );

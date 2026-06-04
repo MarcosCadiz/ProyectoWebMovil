@@ -9,6 +9,8 @@ import MenuUsuario from '../pages/MenuUsuario';
 import MisSolicitudes from '../pages/MisSolicitudes';
 import Notificaciones from '../pages/Notificaciones';
 import ProtectedRoute from '../components/navigation/ProtectedRoute';
+import RegistroFuncionario from '../pages/RegistroFuncionario';
+import RegistroTipoUsuario from '../pages/RegistroTipoUsuario';
 import RegistroUsuario from '../pages/RegistroUsuario';
 import RevisionSolicitudes from '../pages/RevisionSolicitudes';
 import SubirArchivos from '../pages/SubirArchivos';
@@ -19,7 +21,9 @@ export default function AppRoutes() {
       <Route path={paths.home} element={<Inicio />} />
       <Route path={paths.loginUser} element={<LoginUsuario />} />
       <Route path={paths.loginStaff} element={<LoginFuncionario />} />
+      <Route path={paths.register} element={<RegistroTipoUsuario />} />
       <Route path={paths.registerUser} element={<RegistroUsuario />} />
+      <Route path={paths.registerStaff} element={<RegistroFuncionario />} />
 
       <Route element={<ProtectedRoute allowedRoles={['usuario']} redirectTo={paths.loginUser} />}>
         <Route path={paths.userMenu} element={<MenuUsuario />} />

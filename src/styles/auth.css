@@ -44,7 +44,8 @@
   min-width: 336px;
 }
 
-.login-form {
+.login-form,
+.register-select {
   width: 450px;
 }
 
@@ -65,7 +66,7 @@
 
 .login-form label {
   display: block;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .login-form label span {
@@ -152,4 +153,42 @@
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+}
+
+.register-role-card {
+  width: 100%;
+  border: 1px solid #d6dee8;
+  background: #fff;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 22px;
+  text-align: left;
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 18px rgba(15, 105, 180, 0.08);
+}
+
+.register-role-card strong {
+  color: #0051a8;
+  font-size: 20px;
+}
+
+.register-role-card span {
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.register-role-card-staff strong {
+  color: #139ca6;
+}
+
+.link-button {
+  border: 0;
+  background: transparent;
+  color: #0f69b4;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 0;
 }
