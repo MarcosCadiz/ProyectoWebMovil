@@ -1,11 +1,11 @@
-﻿# Informe TÃ©cnico - Plataforma DOM en LÃ­nea
+﻿# Informe Técnico - Plataforma DOM en Línea
 
-## 1. IdentificaciÃ³n del Proyecto
+## 1. Identificación del Proyecto
 
-**Nombre:** Plataforma DOM en LÃ­nea
-**InstituciÃ³n objetivo:** Municipalidad de Santo Domingo
-**Ãrea:** DirecciÃ³n de Obras Municipales (DOM)
-**Asignatura:** IngenierÃ­a Web y MÃ³vil (ICI4247-1)
+**Nombre:** Plataforma DOM en Línea
+**Institución objetivo:** Municipalidad de Santo Domingo
+**Área:** Dirección de Obras Municipales (DOM)
+**Asignatura:** Ingeniería Web y Móvil (ICI4247-1)
 **Repositorio:** https://github.com/MarcosCadiz/ProyectoWebMovil.git
 
 ## 2. Integrantes
@@ -14,70 +14,70 @@
 - Amaro Fibla
 - Marcos Cadiz
 
-## 3. PropÃ³sito del Proyecto
+## 3. Propósito del Proyecto
 
-La plataforma busca digitalizar y ordenar el proceso de gestiÃ³n de trÃ¡mites de la DirecciÃ³n de Obras Municipales. El objetivo es disminuir la dependencia de revisiones manuales, mejorar la trazabilidad de solicitudes y facilitar la comunicaciÃ³n entre usuarios ciudadanos y funcionarios municipales.
+La plataforma busca digitalizar y ordenar el proceso de gestión de trámites de la Dirección de Obras Municipales. El objetivo es disminuir la dependencia de revisiones manuales, mejorar la trazabilidad de solicitudes y facilitar la comunicación entre usuarios ciudadanos y funcionarios municipales.
 
-La soluciÃ³n contempla pantallas para login diferenciado, registro de usuarios, bandeja de usuario, bandeja de funcionario, seguimiento de solicitudes, notificaciones, carga de documentos, mensajerÃ­a y revisiÃ³n normativa.
+La solución contempla pantallas para login diferenciado, registro de usuarios, bandeja de usuario, bandeja de funcionario, seguimiento de solicitudes, notificaciones, carga de documentos, mensajería y revisión normativa.
 
 ## 4. Problema Detectado
 
 Las Direcciones de Obras Municipales suelen revisar documentos, formularios, planos y normativas de forma manual. Esto genera:
 
-- Demoras en la revisiÃ³n.
+- Demoras en la revisión.
 - Posibilidad de errores humanos.
 - Baja trazabilidad.
 - Dificultad para informar oportunamente al usuario.
 - Sobrecarga administrativa para funcionarios.
-- GestiÃ³n documental dispersa.
+- Gestión documental dispersa.
 
 ## 5. Usuarios Objetivos
 
 ### Usuario ciudadano o solicitante
 
-Incluye vecinos, propietarios de la comuna de Santo Domingo, profesionales externos, arquitectos patrocinantes, constructores y representantes de empresas que necesitan ingresar trÃ¡mites, consultar estados, responder observaciones o adjuntar documentaciÃ³n.
+Incluye vecinos, propietarios de la comuna de Santo Domingo, profesionales externos, arquitectos patrocinantes, constructores y representantes de empresas que necesitan ingresar trámites, consultar estados, responder observaciones o adjuntar documentación.
 
 ### Funcionario DOM
 
-Incluye personal administrativo y profesionales tÃ©cnicos de la Municipalidad de Santo Domingo, como arquitectos revisores e ingenieros, encargados de evaluar documentos, normativas y solicitudes ingresadas.
+Incluye personal administrativo y profesionales técnicos de la Municipalidad de Santo Domingo, como arquitectos revisores e ingenieros, encargados de evaluar documentos, normativas y solicitudes ingresadas.
 
-## 6. SoluciÃ³n Propuesta
+## 6. Solución Propuesta
 
 El sistema propone una plataforma web que centraliza:
 
-- Inicio de sesiÃ³n de usuarios ciudadanos y funcionarios.
+- Inicio de sesión de usuarios ciudadanos y funcionarios.
 - Registro diferenciado por tipo de usuario.
 - Seguimiento de solicitudes.
 - Carga y reemplazo de documentos.
 - Notificaciones de cambios de estado.
-- MensajerÃ­a entre usuario y funcionario.
+- Mensajería entre usuario y funcionario.
 - Bandeja de entrada para funcionarios.
-- RevisiÃ³n normativa con checklist.
-- Acciones de aprobar, rechazar u observar trÃ¡mites.
+- Revisión normativa con checklist.
+- Acciones de aprobar, rechazar u observar trámites.
 
 ## 7. Requerimientos del Sistema
 
 ### 7.1 Requerimientos Funcionales
 
-- **RF1: CreaciÃ³n de solicitudes de trÃ¡mites.** El usuario ciudadano puede iniciar un nuevo trÃ¡mite completando un formulario digital y adjuntando documentos.
+- **RF1: Creación de solicitudes de trámites.** El usuario ciudadano puede iniciar un nuevo trámite completando un formulario digital y adjuntando documentos.
 - **RF2: Bandeja de entrada y filtrado.** El funcionario DOM puede visualizar solicitudes y filtrarlas por tipo, fecha y estado.
-- **RF3: EvaluaciÃ³n mediante checklist normativo.** El funcionario puede revisar una solicitud y completar validaciones normativas.
-- **RF4: EmisiÃ³n de observaciones y cambio de estado.** El funcionario puede aprobar, rechazar u observar un trÃ¡mite.
-- **RF5: ActualizaciÃ³n y reemplazo de documentos.** El usuario puede subir documentos corregidos cuando el trÃ¡mite estÃ¡ observado.
-- **RF6: Historial de mensajerÃ­a integrada.** Usuario y funcionario pueden mantener comunicaciÃ³n asociada a una solicitud.
-- **RF7: GeneraciÃ³n automÃ¡tica de notificaciones.** El sistema informa cambios relevantes dentro de la plataforma.
-- **RF8: Descarga de certificados.** Una vez aprobado el trÃ¡mite, el usuario podrÃ¡ descargar certificados o resoluciones.
+- **RF3: Evaluación mediante checklist normativo.** El funcionario puede revisar una solicitud y completar validaciones normativas.
+- **RF4: Emisión de observaciones y cambio de estado.** El funcionario puede aprobar, rechazar u observar un trámite.
+- **RF5: Actualización y reemplazo de documentos.** El usuario puede subir documentos corregidos cuando el trámite está observado.
+- **RF6: Historial de mensajería integrada.** Usuario y funcionario pueden mantener comunicación asociada a una solicitud.
+- **RF7: Generación automática de notificaciones.** El sistema informa cambios relevantes dentro de la plataforma.
+- **RF8: Descarga de certificados.** Una vez aprobado el trámite, el usuario podrá descargar certificados o resoluciones.
 
 ### 7.2 Requerimientos No Funcionales
 
-- **RNF1: Seguridad e integridad.** Las rutas operativas usan JWT firmado con RS256 y las contraseÃ±as se almacenan con bcrypt.
+- **RNF1: Seguridad e integridad.** Las rutas operativas usan JWT firmado con RS256 y las contraseñas se almacenan con bcrypt.
 - **RNF2: Rendimiento.** Las bandejas deben responder de forma fluida bajo carga esperada de usuarios.
-- **RNF3: Usabilidad y diseÃ±o responsivo.** La interfaz debe ser clara para usuarios ciudadanos y funcionarios.
-- **RNF4: Persistencia.** Los usuarios creados deben guardarse en PostgreSQL cuando la variable `DATABASE_URL` estÃ¡ configurada.
+- **RNF3: Usabilidad y diseño responsivo.** La interfaz debe ser clara para usuarios ciudadanos y funcionarios.
+- **RNF4: Persistencia.** Los usuarios creados deben guardarse en PostgreSQL cuando la variable `DATABASE_URL` está configurada.
 
-## 8. DiseÃ±os y Prototipos Figma
+## 8. Diseños y Prototipos Figma
 
-El diseÃ±o visual, UX y UI de la plataforma fue modelado mediante mockups en Figma.
+El diseño visual, UX y UI de la plataforma fue modelado mediante mockups en Figma.
 
 Prototipo:
 
@@ -85,7 +85,7 @@ Prototipo:
 https://www.figma.com/design/Tu8OXGM1aUeQLkPWjovQMP/Proyecto-Web-y-Movil-Santo-Domingo?node-id=0-1&t=jP7KKE41ISASxBfh-1
 ```
 
-### Formularios de sesiÃ³n y registro
+### Formularios de sesión y registro
 
 El flujo contempla dos tipos de registro:
 
@@ -93,73 +93,73 @@ El flujo contempla dos tipos de registro:
 
 - Nombre de usuario.
 - RUT.
-- Correo electrÃ³nico.
-- ContraseÃ±a.
+- Correo electrónico.
+- Contraseña.
 
 **Funcionario DOM**
 
 - Nombre de funcionario.
 - RUT del funcionario.
 - Correo institucional.
-- ContraseÃ±a.
+- Contraseña.
 - Cargo o unidad del funcionario.
 
 ## 9. Arquitectura General
 
 ```txt
 Frontend React/Vite
-    â†“
+    ↓
 Backend Node.js/Express
-    â†“
+    ↓
 Base de Datos PostgreSQL
 ```
 
-El proyecto estÃ¡ separado en capas para mantener claridad y escalabilidad.
+El proyecto está separado en capas para mantener claridad y escalabilidad.
 
 ## 10. Frontend
 
-El frontend estÃ¡ construido con React y Vite. Su objetivo es representar las pantallas del prototipo de Figma y permitir la navegaciÃ³n entre flujos.
+El frontend está construido con React y Vite. Su objetivo es representar las pantallas del prototipo de Figma y permitir la navegación entre flujos.
 
 Estructura relevante:
 
 ```txt
 src/
-â”œâ”€â”€ components/
-â”œâ”€â”€ data/
-â”œâ”€â”€ features/
-â”œâ”€â”€ pages/
-â”œâ”€â”€ routes/
-â”œâ”€â”€ services/
-â””â”€â”€ styles/
+├── components/
+├── data/
+├── features/
+├── pages/
+├── routes/
+├── services/
+└── styles/
 ```
 
 ### Flujo Frontend
 
 ```txt
 Inicio
-â”œâ”€â”€ Login Usuario
-â”‚   â”œâ”€â”€ Registro de usuario
-â”‚   â””â”€â”€ MenÃº Usuario
-â”‚       â”œâ”€â”€ Mis Solicitudes
-â”‚       â”œâ”€â”€ Notificaciones
-â”‚       â”œâ”€â”€ Subir Archivos
-â”‚       â””â”€â”€ Chat / MensajerÃ­a
-â””â”€â”€ Login Funcionario
-    â”œâ”€â”€ Registro de funcionario
-    â””â”€â”€ MenÃº Funcionario
-        â””â”€â”€ RevisiÃ³n de Solicitud
+├── Login Usuario
+│   ├── Registro de usuario
+│   └── Menú Usuario
+│       ├── Mis Solicitudes
+│       ├── Notificaciones
+│       ├── Subir Archivos
+│       └── Chat / Mensajería
+└── Login Funcionario
+    ├── Registro de funcionario
+    └── Menú Funcionario
+        └── Revisión de Solicitud
 ```
 
-### Decisiones de navegaciÃ³n
+### Decisiones de navegación
 
 - Las rutas principales corresponden a inicio, login, registro y paneles de usuario/funcionario.
-- Las rutas secundarias cubren solicitudes, notificaciones, carga de documentos, chat y revisiÃ³n de solicitudes.
-- El modelo SPA con React Router permite navegar sin recargar la pÃ¡gina completa.
-- Las rutas privadas estÃ¡n protegidas por token JWT y rol.
+- Las rutas secundarias cubren solicitudes, notificaciones, carga de documentos, chat y revisión de solicitudes.
+- El modelo SPA con React Router permite navegar sin recargar la página completa.
+- Las rutas privadas están protegidas por token JWT y rol.
 
 ## 11. Consumo de API e Interceptores (EP 2.4)
 
-El frontend consume la API mediante **Axios**. La configuraciÃ³n principal estÃ¡ en:
+El frontend consume la API mediante **Axios**. La configuración principal está en:
 
 ```txt
 src/services/apiClient.js
@@ -183,35 +183,35 @@ http://127.0.0.1:4000/api
 
 ### Interceptor de token JWT
 
-Se implementÃ³ un interceptor de request en Axios. Antes de enviar cada peticiÃ³n, el interceptor revisa si existe un token en `localStorage`:
+Se implementó un interceptor de request en Axios. Antes de enviar cada petición, el interceptor revisa si existe un token en `localStorage`:
 
 ```txt
 dom_access_token
 ```
 
-Si el token existe, se agrega automÃ¡ticamente al header:
+Si el token existe, se agrega automáticamente al header:
 
 ```txt
 Authorization: Bearer <token>
 ```
 
-Esto permite que las rutas protegidas del backend reciban el JWT sin repetir manualmente la lÃ³gica en cada componente.
+Esto permite que las rutas protegidas del backend reciban el JWT sin repetir manualmente la lógica en cada componente.
 
-### Servicios de autenticaciÃ³n
+### Servicios de autenticación
 
 `authApi.js` expone funciones para:
 
 - `login(credentials)`: llama a `POST /api/auth/login`.
 - `register(profile)`: llama a `POST /api/auth/register`.
 - `saveSession(session)`: guarda usuario y JWT en navegador.
-- `clearSession()`: elimina sesiÃ³n al cerrar sesiÃ³n.
+- `clearSession()`: elimina sesión al cerrar sesión.
 
-### ValidaciÃ³n de roles desde frontend
+### Validación de roles desde frontend
 
 El login de usuario solo permite entrar si el backend retorna `role: "usuario"`.
 El login de funcionario solo permite entrar si el backend retorna `role: "funcionario"`.
 
-Si se ingresan credenciales vÃ¡lidas pero en el acceso incorrecto, se muestra una advertencia y no se guarda el token.
+Si se ingresan credenciales válidas pero en el acceso incorrecto, se muestra una advertencia y no se guarda el token.
 
 Ejemplo:
 
@@ -221,54 +221,54 @@ Estas credenciales pertenecen a un usuario. Ingresa desde el acceso usuario.
 
 ## 12. Backend
 
-El backend estÃ¡ construido con Node.js y Express. Entrega rutas API, autenticaciÃ³n, hashing de contraseÃ±as, emisiÃ³n de tokens JWT y conexiÃ³n a PostgreSQL.
+El backend está construido con Node.js y Express. Entrega rutas API, autenticación, hashing de contraseñas, emisión de tokens JWT y conexión a PostgreSQL.
 
 Estructura relevante:
 
 ```txt
 server/
-â”œâ”€â”€ app.js
-â”œâ”€â”€ index.js
-â”œâ”€â”€ config/
-â”œâ”€â”€ controllers/
-â”œâ”€â”€ data/
-â”œâ”€â”€ middleware/
-â”œâ”€â”€ routes/
-â””â”€â”€ services/
+├── app.js
+├── index.js
+├── config/
+├── controllers/
+├── data/
+├── middleware/
+├── routes/
+└── services/
 ```
 
 ### Flujo Backend
 
 ```txt
 Request HTTP
-    â†“
+    ↓
 Ruta Express
-    â†“
+    ↓
 Controlador
-    â†“
+    ↓
 Servicio
-    â†“
+    ↓
 Capa de datos
-    â†“
+    ↓
 PostgreSQL o memoria temporal
-    â†“
+    ↓
 Respuesta JSON
 ```
 
-### JustificaciÃ³n tÃ©cnica
+### Justificación técnica
 
-La implementaciÃ³n usa una estructura por capas:
+La implementación usa una estructura por capas:
 
 - **Rutas:** definen los puntos de entrada HTTP.
 - **Controladores:** administran request y response.
-- **Servicios:** contienen la lÃ³gica de negocio.
-- **Capa de datos:** interactÃºa con PostgreSQL o con memoria temporal si la base no estÃ¡ disponible.
+- **Servicios:** contienen la lógica de negocio.
+- **Capa de datos:** interactúa con PostgreSQL o con memoria temporal si la base no está disponible.
 
-Esta separaciÃ³n favorece mantenibilidad, testeo y escalabilidad.
+Esta separación favorece mantenibilidad, testeo y escalabilidad.
 
 ## 13. Modelo Relacional y Base de Datos PostgreSQL
 
-La persistencia principal estÃ¡ pensada para PostgreSQL. La conexiÃ³n se configura mediante:
+La persistencia principal está pensada para PostgreSQL. La conexión se configura mediante:
 
 ```txt
 DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
@@ -286,11 +286,11 @@ server/services/databaseService.js
 
 ### Comportamiento actual
 
-- Si `DATABASE_URL` estÃ¡ configurado y PostgreSQL estÃ¡ disponible, los usuarios se guardan persistentemente en la tabla `users`.
-- Si PostgreSQL no estÃ¡ disponible, el backend no se cae; usa memoria como respaldo temporal para desarrollo.
+- Si `DATABASE_URL` está configurado y PostgreSQL está disponible, los usuarios se guardan persistentemente en la tabla `users`.
+- Si PostgreSQL no está disponible, el backend no se cae; usa memoria como respaldo temporal para desarrollo.
 - Al iniciar el servidor, se asegura la existencia de la tabla `users` y columnas necesarias.
 
-### Diagrama Entidad-RelaciÃ³n Simplificado
+### Diagrama Entidad-Relación Simplificado
 
 ```txt
 users 1 ---- N tramites
@@ -306,34 +306,34 @@ users 1 ---- N notifications
 
 - **users:** Guarda usuarios ciudadanos y funcionarios. Contiene `id`, `name`, `rut`, `email`, `department`, `password_hash` y `role`.
 - **tramites:** Representa una solicitud DOM.
-- **tramite_documentos:** Guarda archivos asociados al trÃ¡mite.
-- **tramite_mensajes:** Guarda la conversaciÃ³n entre usuario y funcionario.
+- **tramite_documentos:** Guarda archivos asociados al trámite.
+- **tramite_mensajes:** Guarda la conversación entre usuario y funcionario.
 - **notifications:** Guarda avisos dirigidos a usuarios.
-- **audit_events:** Guarda trazabilidad tÃ©cnica y funcional.
+- **audit_events:** Guarda trazabilidad técnica y funcional.
 
-## 14. AutenticaciÃ³n
+## 14. Autenticación
 
-El backend permite registrar e iniciar sesiÃ³n con RUT y contraseÃ±a.
+El backend permite registrar e iniciar sesión con RUT y contraseña.
 
-### Hash de contraseÃ±as
+### Hash de contraseñas
 
-Las contraseÃ±as no se almacenan directamente. Se procesan con bcrypt:
+Las contraseñas no se almacenan directamente. Se procesan con bcrypt:
 
 ```txt
-ContraseÃ±a original
-    â†“
+Contraseña original
+    ↓
 bcrypt
-    â†“
+    ↓
 Hash seguro
 ```
 
 ### Login y token
 
-Cuando el usuario inicia sesiÃ³n correctamente:
+Cuando el usuario inicia sesión correctamente:
 
 ```txt
 1. Se busca el usuario por RUT.
-2. Se compara la contraseÃ±a con bcrypt.
+2. Se compara la contraseña con bcrypt.
 3. Si coincide, se genera un JWT.
 4. El frontend guarda el token.
 5. El token se usa para acceder a rutas protegidas.
@@ -341,28 +341,28 @@ Cuando el usuario inicia sesiÃ³n correctamente:
 
 ### JWT y JWK
 
-El sistema genera un JWT firmado con RS256. La clave pÃºblica se expone como JWK/JWKS:
+El sistema genera un JWT firmado con RS256. La clave pública se expone como JWK/JWKS:
 
 ```txt
 GET /api/jwks
 GET /api/.well-known/jwks.json
 ```
 
-## 15. Seguridad e InyecciÃ³n SQL (EP 2.6)
+## 15. Seguridad e Inyección SQL (EP 2.6)
 
 El sistema implementa:
 
-- Hash de contraseÃ±as con bcrypt.
+- Hash de contraseñas con bcrypt.
 - JWT firmado con RS256.
-- JWK/JWKS para verificaciÃ³n pÃºblica.
-- Middleware de autenticaciÃ³n.
-- Control bÃ¡sico por rol.
-- Limpieza de sesiÃ³n al cerrar sesiÃ³n.
-- ValidaciÃ³n de rol en frontend antes de guardar JWT.
+- JWK/JWKS para verificación pública.
+- Middleware de autenticación.
+- Control básico por rol.
+- Limpieza de sesión al cerrar sesión.
+- Validación de rol en frontend antes de guardar JWT.
 
-### ProtecciÃ³n contra inyecciÃ³n SQL
+### Protección contra inyección SQL
 
-La conexiÃ³n a PostgreSQL utiliza consultas parametrizadas mediante el cliente `pg`.
+La conexión a PostgreSQL utiliza consultas parametrizadas mediante el cliente `pg`.
 
 Ejemplo conceptual:
 
@@ -370,17 +370,17 @@ Ejemplo conceptual:
 SELECT ... FROM users WHERE rut = $1
 ```
 
-Los valores ingresados por el usuario se envÃ­an como parÃ¡metros separados del texto SQL. Esto evita concatenar directamente datos del formulario dentro de la consulta y reduce el riesgo de inyecciÃ³n SQL.
+Los valores ingresados por el usuario se envían como parámetros separados del texto SQL. Esto evita concatenar directamente datos del formulario dentro de la consulta y reduce el riesgo de inyección SQL.
 
-TambiÃ©n se usa:
+También se usa:
 
-- RestricciÃ³n `UNIQUE` para `rut`.
+- Restricción `UNIQUE` para `rut`.
 - Manejo del error PostgreSQL `23505` para detectar usuarios duplicados.
-- ValidaciÃ³n de roles permitidos: `usuario` y `funcionario`.
+- Validación de roles permitidos: `usuario` y `funcionario`.
 
 ## 16. Rutas API
 
-### PÃºblicas
+### Públicas
 
 ```txt
 GET  /api/health
@@ -412,7 +412,7 @@ GET /api/users
 
 ## 17. Pruebas de API con Postman / Insomnia (EP 2.7)
 
-El proyecto incluye una colecciÃ³n Postman para verificar el funcionamiento del backend.
+El proyecto incluye una colección Postman para verificar el funcionamiento del backend.
 
 Archivo:
 
@@ -420,7 +420,7 @@ Archivo:
 postman/DOM_Santo_Domingo_API.postman_collection.json
 ```
 
-La colecciÃ³n valida:
+La colección valida:
 
 - `GET /api/health`
 - `GET /api/jwks`
@@ -431,9 +431,9 @@ La colecciÃ³n valida:
 - `GET /api/users` con rol funcionario.
 - `GET /api/tramites`
 - `POST /api/tramites`
-- Casos negativos: token faltante, credenciales invÃ¡lidas y trÃ¡mite sin tipo.
+- Casos negativos: token faltante, credenciales inválidas y trámite sin tipo.
 
-### Evidencia de ejecuciÃ³n
+### Evidencia de ejecución
 
 Se ejecutaron verificaciones locales desde terminal para respaldar el cumplimiento:
 
@@ -444,10 +444,10 @@ npm run build
 Resultado:
 
 ```txt
-âœ“ built
+✓ built
 ```
 
-TambiÃ©n se ejecutÃ³ una prueba de API que verificÃ³:
+También se ejecutó una prueba de API que verificó:
 
 ```txt
 health
@@ -465,13 +465,13 @@ Resultado:
 api-evidence-ok: health, login usuario, login funcionario, users/me, users, crear tramite, error controlado
 ```
 
-ValidaciÃ³n de colecciÃ³n Postman:
+Validación de colección Postman:
 
 ```txt
 postman-collection-json-ok
 ```
 
-### CÃ³mo ejecutar la colecciÃ³n
+### Cómo ejecutar la colección
 
 1. Levantar backend:
 
@@ -485,7 +485,7 @@ npm run dev:api
 postman/DOM_Santo_Domingo_API.postman_collection.json
 ```
 
-3. Ejecutar los requests en orden. La colecciÃ³n guarda tokens de usuario y funcionario para probar rutas protegidas.
+3. Ejecutar los requests en orden. La colección guarda tokens de usuario y funcionario para probar rutas protegidas.
 
 ## 18. Usuarios Demo
 
@@ -506,8 +506,8 @@ Password: Funcionario123
 ```txt
 1. Ingresa a la plataforma.
 2. Selecciona "Usuario".
-3. Inicia sesiÃ³n.
-4. Revisa el menÃº principal.
+3. Inicia sesión.
+4. Revisa el menú principal.
 5. Consulta solicitudes.
 6. Revisa notificaciones.
 7. Sube documentos.
@@ -519,7 +519,7 @@ Password: Funcionario123
 ```txt
 1. Ingresa a la plataforma.
 2. Selecciona "Funcionario".
-3. Inicia sesiÃ³n.
+3. Inicia sesión.
 4. Revisa la bandeja de entrada.
 5. Selecciona una solicitud.
 6. Revisa antecedentes y documentos.
@@ -533,11 +533,11 @@ Password: Funcionario123
 1. Usuario o funcionario presiona "Registrarse".
 2. Selecciona tipo de cuenta.
 3. Completa formulario.
-4. El backend guarda usuario con hash de contraseÃ±a.
+4. El backend guarda usuario con hash de contraseña.
 5. El sistema vuelve al login correspondiente.
 ```
 
-### Cierre de sesiÃ³n
+### Cierre de sesión
 
 ```txt
 1. Usuario o funcionario presiona "Cerrar Sesion".
@@ -545,7 +545,7 @@ Password: Funcionario123
 3. El sistema vuelve a la pantalla inicial.
 ```
 
-## 20. InstalaciÃ³n
+## 20. Instalación
 
 1. Clonar el repositorio:
 
@@ -578,7 +578,7 @@ cp .env.example .env
 DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
 ```
 
-## 21. EjecuciÃ³n
+## 21. Ejecución
 
 Levantar frontend:
 
@@ -613,17 +613,17 @@ npm run build
 ## 22. Consideraciones
 
 - El sistema ya contempla PostgreSQL para persistencia de usuarios.
-- Si PostgreSQL no estÃ¡ disponible, el backend usa memoria temporal para que el sistema no se caiga en desarrollo.
-- Varias pantallas de trÃ¡mites, notificaciones y mensajerÃ­a aÃºn usan datos de mockup.
-- El login, registro, cierre de sesiÃ³n y protecciÃ³n de rutas ya estÃ¡n conectados al backend.
-- Para producciÃ³n se recomienda persistir tambiÃ©n trÃ¡mites, documentos, mensajes y notificaciones en PostgreSQL.
+- Si PostgreSQL no está disponible, el backend usa memoria temporal para que el sistema no se caiga en desarrollo.
+- Varias pantallas de trámites, notificaciones y mensajería aún usan datos de mockup.
+- El login, registro, cierre de sesión y protección de rutas ya están conectados al backend.
+- Para producción se recomienda persistir también trámites, documentos, mensajes y notificaciones en PostgreSQL.
 
-## 23. PrÃ³ximos Pasos
+## 23. Próximos Pasos
 
-- Conectar trÃ¡mites, documentos, mensajes y notificaciones a PostgreSQL.
+- Conectar trámites, documentos, mensajes y notificaciones a PostgreSQL.
 - Agregar carga real de archivos.
 - Implementar refresh tokens.
 - Agregar pruebas automatizadas con Jest, Vitest o Supertest.
-- Agregar validaciÃ³n avanzada de formularios.
+- Agregar validación avanzada de formularios.
 - Mejorar permisos granulares por rol.
 - Agregar almacenamiento seguro para documentos PDF.
