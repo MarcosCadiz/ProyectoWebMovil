@@ -7,4 +7,5 @@ export const env = {
   jwtIssuer: process.env.JWT_ISSUER || 'dom-santo-domingo-api',
   jwtAudience: process.env.JWT_AUDIENCE || 'dom-santo-domingo-client',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
+  databaseUrl: process.env.DATABASE_URL || '',
 };

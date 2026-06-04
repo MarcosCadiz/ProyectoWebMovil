@@ -1,7 +1,9 @@
 import { createApp } from './app.js';
 import { env } from './config/env.js';
+import { ensureDatabaseSchema } from './services/databaseService.js';
 import { seedInitialUsers } from './services/seedService.js';
 
+await ensureDatabaseSchema();
 await seedInitialUsers();
 
 const app = createApp();

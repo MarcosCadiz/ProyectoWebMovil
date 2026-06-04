@@ -1,6 +1,8 @@
-# Plataforma DOM en Línea - Municipalidad de Santo Domingo
+﻿# Plataforma DOM en Linea - Municipalidad de Santo Domingo
 
-Proyecto web y móvil para digitalizar la gestión de trámites de la Dirección de Obras Municipales (DOM) de la Municipalidad de Santo Domingo.
+Proyecto web y movil para digitalizar la gestion de tramites de la Direccion de Obras Municipales (DOM) de la Municipalidad de Santo Domingo.
+
+La plataforma permite separar el acceso de usuarios ciudadanos y funcionarios DOM, registrar nuevos usuarios, iniciar sesion con JWT, proteger rutas privadas, consultar tramites y preparar la base para persistencia en PostgreSQL.
 
 ## Integrantes
 
@@ -8,89 +10,61 @@ Proyecto web y móvil para digitalizar la gestión de trámites de la Dirección
 - Amaro Fibla
 - Marcos Cadiz
 
-## Contexto del Proyecto
+## Proposito
 
-El proyecto corresponde a la asignatura **Ingeniería Web y Móvil (ICI4247-1)**. La propuesta busca resolver una problemática real de la comuna de Santo Domingo: la revisión manual de trámites, documentos y normativas dentro de la Dirección de Obras Municipales.
+El objetivo del proyecto es mejorar la gestion DOM mediante una plataforma digital que reduzca tiempos de respuesta, mejore la trazabilidad de solicitudes, ordene la comunicacion entre usuarios y funcionarios, y centralice documentos, observaciones, estados y notificaciones.
 
-Actualmente, muchos procesos DOM dependen de revisión manual de formularios, planos, documentos y criterios normativos. Esto genera demoras, riesgo de errores, baja trazabilidad y dificultad para mantener informados a usuarios y funcionarios.
+## Tecnologias principales
 
-## Propósito
-
-El propósito de la plataforma es entregar una solución digital que permita:
-
-- Digitalizar la revisión y seguimiento de trámites DOM.
-- Reducir tiempos de respuesta.
-- Mejorar la trazabilidad de solicitudes.
-- Facilitar la interacción entre usuarios y funcionarios.
-- Mantener informado al usuario sobre el estado de sus solicitudes.
-- Entregar una interfaz clara para usuarios ciudadanos y funcionarios municipales.
-- Centralizar carga de documentos, notificaciones, observaciones y revisión normativa.
-
-## Tecnologías Utilizadas
-
-### Frontend
+Frontend:
 
 - React
 - Vite
 - React Router DOM
-- CSS modularizado por dominio
+- Axios
+- CSS modularizado
 
-### Backend
+Backend:
 
 - Node.js
 - Express
 - bcrypt
-- JSON Web Token (JWT)
-- JWK/JWKS para exponer clave pública de verificación
-- CORS
+- JWT con RS256
+- JWK/JWKS
+- PostgreSQL con fallback en memoria
 - dotenv
+- CORS
 
-### Herramientas
+Herramientas:
 
 - Visual Studio Code
 - npm
 - Git / GitHub
+- Postman o Insomnia
 
-## Estructura General del Repositorio
+## Estructura resumida
 
 ```txt
 .
-├── src/
-│   ├── App.jsx
-│   ├── main.jsx
-│   ├── components/
-│   │   ├── brand/
-│   │   ├── layout/
-│   │   ├── navigation/
-│   │   └── ui/
-│   ├── data/
-│   ├── features/
-│   │   ├── auth/
-│   │   ├── chat/
-│   │   ├── notifications/
-│   │   ├── requests/
-│   │   ├── review/
-│   │   ├── staff/
-│   │   ├── upload/
-│   │   └── user/
-│   ├── pages/
-│   ├── routes/
-│   ├── services/
-│   └── styles/
-├── server/
-│   ├── app.js
-│   ├── index.js
-│   ├── config/
-│   ├── controllers/
-│   ├── data/
-│   ├── middleware/
-│   ├── routes/
-│   └── services/
-├── index.html
-├── index.css
-├── package.json
-├── vite.config.js
-└── .env.example
+|-- src/                     Frontend React
+|   |-- components/           Componentes reutilizables
+|   |-- features/             Modulos por dominio
+|   |-- pages/                Pantallas principales
+|   |-- routes/               Rutas publicas y protegidas
+|   |-- services/             Cliente API, auth y sesion
+|   `-- styles/               Estilos por flujo
+|-- server/                  Backend Node.js/Express
+|   |-- config/               Configuracion de base de datos
+|   |-- controllers/          Controladores HTTP
+|   |-- data/                 Store en memoria/PostgreSQL
+|   |-- middleware/           Auth, roles y errores
+|   |-- routes/               Rutas API
+|   `-- services/             Auth, JWT, seed y base de datos
+|-- database/postgresql/     Schema, seed y migraciones
+|-- docs/                    Documentacion tecnica e informe
+|-- postman/                 Coleccion de pruebas API
+|-- package.json
+`-- .env.example
 ```
 
 ## Prerrequisitos
@@ -109,9 +83,9 @@ node -v
 npm -v
 ```
 
-## Instalación
+## Instalacion
 
-Clonar el repositorio y entrar a la carpeta del proyecto:
+Clonar el repositorio:
 
 ```bash
 git clone https://github.com/MarcosCadiz/ProyectoWebMovil.git
@@ -124,214 +98,124 @@ Instalar dependencias:
 npm install
 ```
 
-Crear archivo de variables de entorno a partir del ejemplo:
+Crear el archivo de variables de entorno:
 
 ```bash
 copy .env.example .env
 ```
 
-En sistemas Linux/macOS:
+En Linux/macOS:
 
 ```bash
 cp .env.example .env
 ```
 
-## Ejecución del Proyecto
+## Variables de entorno
 
-### Levantar el frontend
+El archivo `.env.example` sirve como plantilla. Copialo como `.env` y completa los valores necesarios para tu entorno local.
+
+Ejemplo general:
+
+```txt
+PORT=4000
+CLIENT_URL=http://127.0.0.1:5173
+JWT_ISSUER=dom-santo-domingo
+JWT_AUDIENCE=dom-santo-domingo-client
+DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
+```
+
+Si `DATABASE_URL` no esta configurado o PostgreSQL no esta disponible, la API puede funcionar con datos en memoria para pruebas locales.
+
+## Ejecucion
+
+Levantar frontend:
 
 ```bash
 npm run dev
 ```
 
-URL por defecto:
+URL frontend:
 
 ```txt
 http://127.0.0.1:5173
 ```
 
-### Levantar el backend
-
-En otra terminal:
+Levantar backend en otra terminal:
 
 ```bash
 npm run dev:api
 ```
 
-URL de la API:
+URL API:
 
 ```txt
 http://127.0.0.1:4000/api
 ```
 
-### Compilar para producción
+Compilar frontend:
 
 ```bash
 npm run build
 ```
 
-## Scripts Disponibles
+## Scripts disponibles
 
 ```txt
-npm run dev       Levanta el frontend con Vite
-npm run dev:web   Alias para levantar frontend
-npm run dev:api   Levanta el backend Node.js/Express
-npm run start:api Levanta el backend Node.js/Express
-npm run build     Compila el frontend para producción
-npm run preview   Previsualiza la build de producción
+npm run dev        Levanta el frontend con Vite
+npm run dev:web    Alias para frontend
+npm run dev:api    Levanta la API Node.js/Express
+npm run start:api  Levanta la API en modo normal
+npm run build      Compila el frontend
+npm run preview    Previsualiza la build
 ```
 
-## Flujo Frontend
+## Flujos principales
 
-El frontend está construido con React y React Router. Cada pantalla principal vive en `src/pages`, pero la lógica visual está modularizada en `src/features` y `src/components`.
-
-Flujo principal:
+Usuario ciudadano:
 
 ```txt
-Inicio
-├── Login Usuario
-│   └── Menú Usuario
-│       ├── Mis Solicitudes
-│       ├── Notificaciones
-│       ├── Subir Archivos
-│       └── Chat / Mensajería
-└── Login Funcionario
-    └── Menú Funcionario
-        └── Revisión de Solicitud
+Inicio -> Login Usuario -> Registro Usuario -> Menu Usuario -> Solicitudes / Notificaciones / Documentos / Chat
 ```
 
-### Pantallas principales
-
-- `/` - Pantalla de selección de tipo de inicio de sesión.
-- `/login-usuario` - Login para usuarios ciudadanos.
-- `/login-funcionario` - Login para funcionarios DOM.
-- `/menu-usuario` - Panel principal del usuario.
-- `/mis-solicitudes` - Listado y trazabilidad de solicitudes.
-- `/notificaciones` - Centro de notificaciones.
-- `/subir-archivos` - Gestor de documentos.
-- `/chat-audiencia` - Historial y mensajería.
-- `/menu-funcionario` - Bandeja de entrada del funcionario.
-- `/revision-solicitudes` - Revisión normativa de una solicitud.
-
-## Flujo Backend
-
-El backend está construido con Node.js y Express. Su objetivo es entregar rutas API, autenticación, protección de rutas y emisión de tokens.
-
-Flujo general:
+Funcionario DOM:
 
 ```txt
-Cliente React
-    ↓
-Rutas Express /api
-    ↓
-Controladores
-    ↓
-Servicios
-    ↓
-Datos en memoria
+Inicio -> Login Funcionario -> Registro Funcionario -> Menu Funcionario -> Revision de solicitudes
 ```
 
-Por ahora los datos se guardan en memoria dentro de `server/data`. Esto permite probar el flujo completo sin base de datos. En una versión productiva, esta capa debería conectarse a una base de datos real.
-
-## Autenticación
-
-La autenticación usa:
-
-- `bcrypt` para proteger contraseñas.
-- `JWT` para generar tokens de sesión.
-- `JWK/JWKS` para publicar la clave pública de verificación.
-
-### Registro
-
-Ruta:
+Autenticacion:
 
 ```txt
-POST /api/auth/register
+Registro/Login -> API Auth -> bcrypt/JWT -> token en navegador -> rutas protegidas -> validacion de rol
 ```
 
-Body:
-
-```json
-{
-  "name": "Juan Pérez",
-  "rut": "12.345.678-9",
-  "password": "Usuario123",
-  "role": "usuario"
-}
-```
-
-El backend nunca guarda la contraseña original. Primero genera un hash con bcrypt y guarda únicamente ese hash.
-
-### Login
-
-Ruta:
+Base de datos:
 
 ```txt
-POST /api/auth/login
+API Express -> servicios -> PostgreSQL con consultas parametrizadas -> fallback en memoria si no hay conexion
 ```
 
-Body:
-
-```json
-{
-  "rut": "12.345.678-9",
-  "password": "Usuario123"
-}
-```
-
-Respuesta:
-
-```json
-{
-  "user": {
-    "name": "Juan Pérez",
-    "rut": "12.345.678-9",
-    "role": "usuario"
-  },
-  "accessToken": "eyJhbGciOiJSUzI1NiIs...",
-  "tokenType": "Bearer"
-}
-```
-
-El frontend guarda el token en `localStorage` usando:
+## Rutas principales del frontend
 
 ```txt
-dom_access_token
-dom_user
+/                     Inicio
+/login-usuario        Login ciudadano
+/login-funcionario    Login funcionario
+/registro             Selector de tipo de registro
+/registro-usuario     Registro ciudadano
+/registro-funcionario Registro funcionario
+/menu-usuario         Panel del usuario
+/menu-funcionario     Panel del funcionario
+/mis-solicitudes      Solicitudes del usuario
+/notificaciones       Centro de notificaciones
+/subir-archivos       Carga de documentos
+/chat-audiencia       Mensajeria
+/revision-solicitudes Revision DOM
 ```
 
-## JWT y JWK
+## API principal
 
-El login genera un **JWT** firmado con algoritmo `RS256`.
-
-La clave privada firma el token. La clave pública se expone como JWK/JWKS para permitir verificación.
-
-Rutas:
-
-```txt
-GET /api/jwks
-GET /api/.well-known/jwks.json
-```
-
-Flujo:
-
-```txt
-Usuario inicia sesión
-    ↓
-Backend valida contraseña con bcrypt
-    ↓
-Backend firma JWT con clave privada
-    ↓
-Cliente guarda JWT
-    ↓
-Cliente envía Authorization: Bearer <token>
-    ↓
-Backend verifica JWT con clave pública
-```
-
-## Rutas API
-
-### Rutas públicas
+Rutas publicas:
 
 ```txt
 GET  /api/health
@@ -341,13 +225,7 @@ POST /api/auth/register
 POST /api/auth/login
 ```
 
-### Rutas protegidas
-
-Estas rutas requieren header:
-
-```txt
-Authorization: Bearer <accessToken>
-```
+Rutas protegidas:
 
 ```txt
 GET  /api/users/me
@@ -355,105 +233,87 @@ GET  /api/tramites
 POST /api/tramites
 ```
 
-### Rutas protegidas por rol
-
-Solo para funcionarios:
+Ruta protegida por rol funcionario:
 
 ```txt
 GET /api/users
 ```
 
-## Usuarios Demo
+La documentacion completa de endpoints esta en [docs/api-endpoints.md](./docs/api-endpoints.md).
+
+## Seguridad
+
+El proyecto implementa:
+
+- Hash de contrasenas con bcrypt.
+- Tokens JWT firmados con RS256.
+- Publicacion de clave publica mediante JWK/JWKS.
+- Rutas protegidas con header `Authorization: Bearer <token>`.
+- Validacion de roles para separar usuario ciudadano y funcionario.
+- Consultas parametrizadas en PostgreSQL para reducir riesgo de inyeccion SQL.
+- Manejo centralizado de errores para evitar caidas por entradas invalidas.
+
+## Pruebas API
+
+La coleccion Postman esta disponible en:
+
+[postman/DOM_Santo_Domingo_API.postman_collection.json](./postman/DOM_Santo_Domingo_API.postman_collection.json)
+
+La coleccion permite validar healthcheck, login, registro, rutas protegidas, control de roles, tramites y errores esperados.
+
+Para ejecutarla:
+
+```bash
+npm run dev:api
+```
+
+Luego importar la coleccion en Postman o Insomnia y ejecutar los requests en orden.
+
+## Base de datos
+
+Archivos principales:
+
+- [database/postgresql/schema.sql](./database/postgresql/schema.sql)
+- [database/postgresql/seed.sql](./database/postgresql/seed.sql)
+- [database/postgresql/migrations](./database/postgresql/migrations)
+- [docs/modelo-relacional.md](./docs/modelo-relacional.md)
+
+Crear base local:
+
+```bash
+createdb dom_santo_domingo
+psql -d dom_santo_domingo -f database/postgresql/schema.sql
+psql -d dom_santo_domingo -f database/postgresql/seed.sql
+```
+
+## Usuarios demo
+
+Usuario ciudadano:
 
 ```txt
-Usuario ciudadano:
 RUT: 12.345.678-9
 Password: Usuario123
+```
 
 Funcionario DOM:
+
+```txt
 RUT: 9.876.543-2
 Password: Funcionario123
 ```
 
-## Flujos Funcionales
+## Documentacion tecnica completa
 
-### Flujo de usuario ciudadano
+El README resume lo necesario para instalar, ejecutar y comprender el proyecto. Los detalles extensos de arquitectura, backend, frontend, consumo de API, interceptores, seguridad, inyeccion SQL, pruebas API, modelo relacional y evidencias estan en el informe tecnico:
 
-```txt
-1. Ingresa a la plataforma.
-2. Selecciona "Usuario".
-3. Inicia sesión.
-4. Accede al menú de usuario.
-5. Revisa solicitudes y estados.
-6. Recibe notificaciones.
-7. Sube documentos si tiene observaciones.
-8. Puede revisar historial y mensajería.
-```
+[Ver informe tecnico del proyecto](./docs/Informe_Proyecto_DOM_Santo_Domingo.md)
 
-### Flujo de funcionario DOM
+Documentos complementarios:
 
-```txt
-1. Ingresa a la plataforma.
-2. Selecciona "Funcionario".
-3. Inicia sesión.
-4. Accede a la bandeja de entrada.
-5. Filtra o revisa solicitudes.
-6. Entra a una solicitud.
-7. Revisa antecedentes y documentos.
-8. Completa checklist normativo.
-9. Observa, rechaza o aprueba el trámite.
-```
+- [Endpoints API](./docs/api-endpoints.md)
+- [Modelo relacional](./docs/modelo-relacional.md)
+- [Coleccion Postman](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
-### Flujo de documentos
+## Estado actual
 
-```txt
-1. Usuario recibe observación.
-2. Entra a notificaciones o gestor de documentos.
-3. Adjunta o reemplaza archivos.
-4. Envía solicitud actualizada.
-5. El trámite continúa su revisión.
-```
-
-### Flujo de notificaciones
-
-```txt
-1. El sistema informa cambios de estado.
-2. Usuario revisa el centro de notificaciones.
-3. Puede subir documentos, descargar certificados o revisar trámite.
-```
-
-### Flujo de mensajería
-
-```txt
-1. Funcionario observa una solicitud.
-2. Usuario revisa el historial.
-3. Usuario responde o adjunta documentos.
-4. Queda trazabilidad de la conversación.
-```
-
-## Seguridad Implementada
-
-- Las contraseñas se guardan con hash bcrypt.
-- Los tokens JWT se firman con RS256.
-- Las rutas protegidas exigen token Bearer.
-- Hay control básico de roles para funcionario.
-- La clave pública se expone como JWK/JWKS.
-
-## Consideraciones Actuales
-
-- El backend usa datos en memoria, por lo que los datos se pierden al reiniciar el servidor.
-- No existe base de datos persistente todavía.
-- La integración frontend/backend está iniciada en el login.
-- Las pantallas usan datos de mockup para mantener el diseño del prototipo.
-- En una versión final se recomienda agregar base de datos, validación avanzada, refresh tokens y manejo de sesiones persistentes.
-
-## Próximos Pasos Recomendados
-
-- Agregar base de datos.
-- Persistir usuarios, solicitudes, documentos y mensajes.
-- Conectar todas las pantallas del frontend a la API.
-- Agregar validaciones de formulario.
-- Implementar refresh token.
-- Crear pruebas unitarias e integración.
-- Agregar carga real de archivos.
-- Agregar panel administrativo para funcionarios.
+El proyecto cuenta con frontend funcional, backend Express, autenticacion con JWT, registro de usuarios y funcionarios, rutas protegidas, validacion de roles, modelo relacional PostgreSQL, coleccion Postman y documentacion tecnica para el segundo avance.

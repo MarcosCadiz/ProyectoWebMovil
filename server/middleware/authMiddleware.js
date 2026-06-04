@@ -1,7 +1,7 @@
 import { findUserByRut, sanitizeUser } from '../data/usersStore.js';
 import { verifyAccessToken } from '../services/tokenService.js';
 
-export function requireAuth(req, res, next) {
+export async function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader?.startsWith('Bearer ')) {
@@ -11,7 +11,7 @@ export function requireAuth(req, res, next) {
   try {
     const token = authHeader.slice('Bearer '.length);
     const payload = verifyAccessToken(token);
-    const user = findUserByRut(payload.rut);
+    const user = await findUserByRut(payload.rut);
 
     if (!user) {
       return res.status(401).json({ error: 'USER_NOT_FOUND' });

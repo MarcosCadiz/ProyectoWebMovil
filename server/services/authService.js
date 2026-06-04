@@ -2,9 +2,13 @@ import { createUser, findUserByRut, sanitizeUser } from '../data/usersStore.js';
 import { comparePassword, hashPassword } from './passwordService.js';
 import { createAccessToken } from './tokenService.js';
 
-export async function registerUser({ name, rut, password, role = 'usuario' }) {
+export async function registerUser({ name, rut, password, role = 'usuario', email = '', department = '' }) {
   if (!name || !rut || !password) {
     throw new Error('MISSING_REQUIRED_FIELDS');
+  }
+
+  if (!['usuario', 'funcionario'].includes(role)) {
+    throw new Error('INVALID_ROLE');
   }
 
   if (password.length < 8) {
@@ -12,9 +16,11 @@ export async function registerUser({ name, rut, password, role = 'usuario' }) {
   }
 
   const passwordHash = await hashPassword(password);
-  const user = createUser({
+  const user = await createUser({
     name,
     rut,
+    email,
+    department,
     role,
     passwordHash,
   });
@@ -27,7 +33,7 @@ export async function loginUser({ rut, password }) {
     throw new Error('MISSING_CREDENTIALS');
   }
 
-  const user = findUserByRut(rut);
+  const user = await findUserByRut(rut);
 
   if (!user) {
     throw new Error('INVALID_CREDENTIALS');

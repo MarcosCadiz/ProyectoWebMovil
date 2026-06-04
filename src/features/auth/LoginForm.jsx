@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { municipalAssets } from '../../data/assets';
 
-export default function LoginForm({ demoCredentials, error, isLoading, onSubmit }) {
+export default function LoginForm({ error, isLoading, onSubmit, registerPath }) {
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -14,35 +14,35 @@ export default function LoginForm({ demoCredentials, error, isLoading, onSubmit 
   }
 
   function handleClaveUnica() {
-    onSubmit(demoCredentials);
+    window.alert('La integracion con ClaveUnica se encuentra en desarrollo.');
   }
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="login-heading">
-        <h2>Iniciar Sesión</h2>
+        <h2>Iniciar sesion</h2>
         <p>Ingresa tus credenciales para acceder</p>
       </div>
       <label>
         <span>RUT</span>
-        <input name="rut" placeholder="Ej: 12.345.678-9" />
+        <input name="rut" placeholder="Ej: 12.345.678-9" required />
       </label>
       <label>
-        <span>Contraseña</span>
-        <input name="password" type="password" placeholder="••••••••" />
+        <span>Contrasena</span>
+        <input name="password" type="password" placeholder="Contrasena" required />
       </label>
       {error ? <p className="login-error">{error}</p> : null}
       <button className="login-submit" type="submit" disabled={isLoading}>
-        {isLoading ? 'Validando...' : 'Iniciar Sesión'}
+        {isLoading ? 'Validando...' : 'Iniciar sesion'}
       </button>
       <span className="login-separator">O ingresa con</span>
       <button className="clave-button" type="button" onClick={handleClaveUnica} disabled={isLoading}>
         <img src={municipalAssets.claveUnica} alt="" />
-        ClaveÚnica
+        ClaveUnica
       </button>
       <div className="login-links">
-        <Link to="#">¿Olvidaste tu contraseña?</Link>
-        <Link to="#">Registrarse</Link>
+        <Link to="#">Olvidaste tu contrasena?</Link>
+        {registerPath ? <Link to={registerPath}>Registrarse</Link> : null}
       </div>
     </form>
   );

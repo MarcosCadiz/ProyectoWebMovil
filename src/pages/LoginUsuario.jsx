@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BrandPanel from '../components/layout/BrandPanel';
 import LoginForm from '../features/auth/LoginForm';
 import { paths } from '../routes/paths';
-import { login, saveSession } from '../services/authApi';
+import { clearSession, login, saveSession } from '../services/authApi';
 
 export default function LoginUsuario() {
   const navigate = useNavigate();
@@ -15,10 +15,17 @@ export default function LoginUsuario() {
       setError('');
       setIsLoading(true);
       const session = await login(credentials);
+
+      if (session.user.role !== 'usuario') {
+        clearSession();
+        setError('Estas credenciales pertenecen a un funcionario. Ingresa desde el acceso funcionario.');
+        return;
+      }
+
       saveSession(session);
       navigate(paths.userMenu);
     } catch {
-      setError('Credenciales inválidas');
+      setError('Credenciales invalidas');
     } finally {
       setIsLoading(false);
     }
@@ -29,10 +36,10 @@ export default function LoginUsuario() {
       <BrandPanel />
       <section className="login-side">
         <LoginForm
-          demoCredentials={{ rut: '12.345.678-9', password: 'Usuario123' }}
           error={error}
           isLoading={isLoading}
           onSubmit={handleSubmit}
+          registerPath={paths.register}
         />
       </section>
     </main>

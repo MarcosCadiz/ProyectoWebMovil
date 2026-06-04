@@ -18,9 +18,9 @@ const seedUsers = [
 
 export async function seedInitialUsers() {
   for (const user of seedUsers) {
-    if (findUserByRut(user.rut)) continue;
+    if (await findUserByRut(user.rut)) continue;
 
-    createUser({
+    await createUser({
       name: user.name,
       rut: user.rut,
       role: user.role,
