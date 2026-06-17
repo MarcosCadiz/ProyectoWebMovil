@@ -1,37 +1,51 @@
-export const publicUser = 'Juan Pérez';
-export const staffUser = 'Roberto Gómez';
+export const publicUser = 'Juan Perez';
+export const staffUser = 'Roberto Gomez';
 
 export const userRequests = [
   {
     title: 'Permiso de Obra Menor',
-    id: '#45092',
+    id: 'TR-45092',
     date: '02/05/2026',
     address: 'Las Araucarias 450, Santo Domingo',
-    status: 'En Revisión (Filtro 1)',
+    status: 'En Revision (Filtro 1)',
     statusClass: 'status-warning',
     action: 'Ver Detalles',
     to: '/chat-audiencia',
     showStepper: true,
+    description: 'Solicitud de permiso para ampliacion menor de vivienda.',
+    documents: [
+      { name: 'Formulario_Solicitud.pdf', category: 'Formulario DOM', status: 'Recibido' },
+      { name: 'Plano_Arquitectura.pdf', category: 'Plano', status: 'Recibido' },
+    ],
   },
   {
-    title: 'Regularización de Vivienda',
-    id: '#44831',
+    title: 'Regularizacion de Vivienda',
+    id: 'TR-44831',
     date: '15/04/2026',
     address: 'Av. Los Lirios 123, Santo Domingo',
     status: 'Observado - Falta PDF',
     statusClass: 'status-danger',
     action: 'Ver Detalles',
     to: '/chat-audiencia',
+    description: 'Regularizacion de obra existente con observacion pendiente.',
+    documents: [
+      { name: 'Formulario_Solicitud.pdf', category: 'Formulario DOM', status: 'Recibido' },
+      { name: 'Plano_Estructural_V1.pdf', category: 'Plano', status: 'Observado' },
+    ],
   },
   {
     title: 'Patente Comercial',
-    id: '#41200',
+    id: 'TR-41200',
     date: '10/01/2026',
     address: 'Plaza Principal Local 4',
     status: 'Aprobado',
     statusClass: 'status-success',
     action: 'Descargar Certificado',
     to: '/mis-solicitudes',
+    description: 'Solicitud aprobada para patente comercial.',
+    documents: [
+      { name: 'Certificado_Patente_Comercial.pdf', category: 'Certificado', status: 'Emitido' },
+    ],
   },
 ];
 
@@ -40,61 +54,61 @@ export const notifications = [
     icon: '!',
     iconClass: '',
     unread: true,
-    title: 'Trámite Observado - Acción Requerida',
-    description: 'El funcionario DOM ha revisado su Regularización de Vivienda (Sol. #44831). Se requiere adjuntar el plano estructural actualizado en formato PDF.',
-    highlight: 'Regularización de Vivienda (Sol. #44831)',
+    title: 'Tramite Observado - Accion Requerida',
+    description: 'El funcionario DOM ha revisado su Regularizacion de Vivienda (Sol. TR-44831). Se requiere adjuntar el plano estructural actualizado en formato PDF.',
+    highlight: 'Regularizacion de Vivienda (Sol. TR-44831)',
     time: 'Hoy, 10:30 hrs',
     action: 'Subir Documento',
     to: '/subir-archivos',
   },
   {
-    icon: '✓',
+    icon: 'OK',
     iconClass: 'success',
     unread: true,
-    title: '¡Trámite Aprobado!',
-    description: 'Su solicitud de Patente Comercial (Sol. #41200) ha superado la revisión normativa y ha sido aprobada exitosamente.',
-    highlight: 'Patente Comercial (Sol. #41200)',
+    title: 'Tramite Aprobado',
+    description: 'Su solicitud de Patente Comercial (Sol. TR-41200) ha superado la revision normativa y ha sido aprobada exitosamente.',
+    highlight: 'Patente Comercial (Sol. TR-41200)',
     time: 'Hoy, 08:15 hrs',
     action: 'Descargar Certificado',
     to: '/mis-solicitudes',
   },
   {
-    icon: '▣',
+    icon: 'DOC',
     iconClass: 'neutral',
-    title: 'Solicitud Ingresada a Revisión',
-    description: 'Su Permiso de Obra Menor (Sol. #45092) ha pasado el filtro inicial y ahora se encuentra en revisión normativa.',
-    highlight: 'Permiso de Obra Menor (Sol. #45092)',
+    title: 'Solicitud Ingresada a Revision',
+    description: 'Su Permiso de Obra Menor (Sol. TR-45092) ha pasado el filtro inicial y ahora se encuentra en revision normativa.',
+    highlight: 'Permiso de Obra Menor (Sol. TR-45092)',
     time: 'Ayer, 14:30 hrs',
-    action: 'Ver Trámite',
+    action: 'Ver Tramite',
     to: '/mis-solicitudes',
   },
 ];
 
 export const staffRequests = [
   {
-    id: '#45098',
+    id: 'TR-45098',
     procedure: 'Permiso de Obra Menor',
     date: '06/05/2026',
-    applicant: 'Juan Pérez',
+    applicant: 'Juan Perez',
     status: 'NUEVA',
     statusClass: 'new',
-    action: 'Iniciar Revisión',
+    action: 'Iniciar Revision',
   },
   {
-    id: '#45097',
-    procedure: 'Regularización Vivienda',
+    id: 'TR-45097',
+    procedure: 'Regularizacion Vivienda',
     date: '05/05/2026',
-    applicant: 'María Silva',
+    applicant: 'Maria Silva',
     status: 'NUEVA',
     statusClass: 'new',
-    action: 'Iniciar Revisión',
+    action: 'Iniciar Revision',
   },
   {
-    id: '#45090',
+    id: 'TR-45090',
     procedure: 'Patente Comercial',
     date: '04/05/2026',
     applicant: 'Constructora XYZ',
-    status: 'En Revisión',
+    status: 'En Revision',
     statusClass: 'review',
     action: 'Continuar',
   },
@@ -109,21 +123,21 @@ export const projectDocuments = [
 export const reviewChecklist = [
   'El uso de suelo propuesto es compatible con la Zona ZU-2 del Plan Regulador Comunal vigente.',
   'Cumple con las normas de distanciamiento, adosamiento y rasantes (Art. 2.6.3 OGUC).',
-  'El coeficiente de constructibilidad y ocupación de suelo están dentro de los límites permitidos.',
-  'La planimetría coincide con las especificaciones técnicas adjuntas.',
+  'El coeficiente de constructibilidad y ocupacion de suelo estan dentro de los limites permitidos.',
+  'La planimetria coincide con las especificaciones tecnicas adjuntas.',
 ];
 
 export const chatMessages = [
   {
     from: 'Funcionario DOM',
     time: 'Ayer, 10:30 hrs',
-    text: 'Estimado Juan, hemos revisado su solicitud. El plano estructural adjunto no respeta el distanciamiento exigido hacia el predio colindante oriente. Por favor, corrija la planimetría y vuelva a subirla en el Gestor de Documentos para continuar la revisión.',
+    text: 'Estimado Juan, hemos revisado su solicitud. El plano estructural adjunto no respeta el distanciamiento exigido hacia el predio colindante oriente. Por favor, corrija la planimetria y vuelva a subirla en el Gestor de Documentos para continuar la revision.',
   },
   {
-    from: 'Tú',
+    from: 'Tu',
     time: 'Hoy, 09:15 hrs',
     mine: true,
-    text: 'Buenos días. Comprendo la observación. Acabo de subir la versión corregida (Plano_Estructural_V2.pdf) en el apartado de documentos. Quedo atento a sus comentarios.',
+    text: 'Buenos dias. Comprendo la observacion. Acabo de subir la version corregida (Plano_Estructural_V2.pdf) en el apartado de documentos. Quedo atento a sus comentarios.',
   },
 ];
 

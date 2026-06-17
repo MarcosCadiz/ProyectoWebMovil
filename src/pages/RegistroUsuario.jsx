@@ -18,10 +18,17 @@ export default function RegistroUsuario({ role = 'usuario' }) {
       navigate(role === 'funcionario' ? paths.loginStaff : paths.loginUser);
     } catch (requestError) {
       const apiError = requestError.response?.data?.error;
-      if (apiError === 'PASSWORD_TOO_SHORT') {
+
+      if (!requestError.response) {
+        setError('API no disponible. Levanta el backend con npm run dev:api e intenta nuevamente.');
+      } else if (apiError === 'MISSING_REQUIRED_FIELDS') {
+        setError('Completa nombre, RUT y contrasena para crear la cuenta');
+      } else if (apiError === 'PASSWORD_TOO_SHORT') {
         setError('La contrasena debe tener al menos 8 caracteres');
       } else if (apiError === 'USER_ALREADY_EXISTS') {
         setError('Ya existe una cuenta asociada a ese RUT');
+      } else if (apiError === 'INVALID_ROLE') {
+        setError('El tipo de cuenta seleccionado no es valido');
       } else {
         setError('No se pudo crear la cuenta');
       }
