@@ -167,6 +167,7 @@ npm run dev:api    Levanta la API Node.js/Express
 npm run start:api  Levanta la API en modo normal
 npm run build      Compila el frontend
 npm run preview    Previsualiza la build
+npm run test:api   Ejecuta prueba smoke de API, JWT, roles y CRUD
 ```
 
 ## Flujos principales
@@ -231,6 +232,10 @@ Rutas protegidas:
 GET  /api/users/me
 GET  /api/tramites
 POST /api/tramites
+GET  /api/tramites/:id
+PUT  /api/tramites/:id
+PATCH /api/tramites/:id
+DELETE /api/tramites/:id
 ```
 
 Ruta protegida por rol funcionario:
@@ -259,7 +264,7 @@ La coleccion Postman esta disponible en:
 
 [postman/DOM_Santo_Domingo_API.postman_collection.json](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
-La coleccion permite validar healthcheck, login, registro, rutas protegidas, control de roles, tramites y errores esperados.
+La coleccion permite validar healthcheck, login, registro, rutas protegidas, control de roles, CRUD de tramites y errores esperados.
 
 Para ejecutarla:
 
@@ -268,6 +273,12 @@ npm run dev:api
 ```
 
 Luego importar la coleccion en Postman o Insomnia y ejecutar los requests en orden.
+
+Tambien se puede ejecutar una verificacion automatizada local:
+
+```bash
+npm run test:api
+```
 
 ## Base de datos
 
