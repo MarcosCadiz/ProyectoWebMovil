@@ -24,10 +24,14 @@ function canUseStorage() {
 }
 
 function normalizeRequest(request) {
+  const seed = userRequests.find((item) => item.id === request.id) || {};
+
   return {
+    ...seed,
     ...request,
-    documents: request.documents || [],
-    description: request.description || '',
+    documents: request.documents?.length ? request.documents : seed.documents || [],
+    description: request.description || seed.description || '',
+    history: request.history?.length ? request.history : seed.history || [],
   };
 }
 
@@ -63,6 +67,7 @@ export function saveTramites(tramites) {
 
 export function createLocalTramite(form, status = 'Ingresado') {
   const timestamp = Date.now();
+  const now = new Date().toLocaleString('es-CL');
 
   return {
     id: `TR-${timestamp}`,
@@ -72,13 +77,26 @@ export function createLocalTramite(form, status = 'Ingresado') {
     status,
     statusClass: status === 'Borrador' ? 'status-neutral' : 'status-warning',
     action: status === 'Borrador' ? 'Continuar Borrador' : 'Ver Detalles',
-    to: '/mis-solicitudes',
     showStepper: status !== 'Borrador',
     applicant: form.solicitante,
+    reviewer: status === 'Borrador' ? 'Sin asignar' : 'Pendiente de asignacion',
+    expediente: status === 'Borrador' ? 'Borrador sin expediente' : `DOM-DIG-${timestamp}`,
+    propertyRole: 'Pendiente de validacion',
+    lastUpdate: now,
+    progress: status === 'Borrador' ? 10 : 20,
     description: form.descripcion,
     observations: form.observaciones,
     generatedDocument: form.generatedDocument,
     documents: form.documents || [],
+    history: [
+      {
+        date: now,
+        title: status === 'Borrador' ? 'Borrador guardado' : 'Solicitud ingresada',
+        description: status === 'Borrador'
+          ? 'La solicitud permanece editable y aun no ha sido enviada a revision.'
+          : 'La solicitud fue registrada y queda pendiente de revision documental.',
+      },
+    ],
   };
 }
 
@@ -86,6 +104,55 @@ export function addTramite(tramite) {
   const tramites = [tramite, ...loadTramites()];
   saveTramites(tramites);
   return tramites;
+}
+
+export function findTramite(id) {
+  return loadTramites().find((tramite) => tramite.id === id) || null;
+}
+
+export function downloadTextDocument(filename, content) {
+  if (typeof document === 'undefined') return;
+
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+export function buildTramiteSummary(tramite) {
+  const documents = tramite.documents?.length
+    ? tramite.documents.map((doc, index) => `${index + 1}. ${doc.name} - ${doc.status}`).join('\n')
+    : 'Sin documentos asociados.';
+
+  return [
+    'RESUMEN DE EXPEDIENTE DOM - DEMO',
+    'Municipalidad de Santo Domingo',
+    '',
+    `Solicitud: ${tramite.id}`,
+    `Expediente: ${tramite.expediente || 'Pendiente'}`,
+    `Tramite: ${tramite.title}`,
+    `Estado: ${tramite.status}`,
+    `Fecha de ingreso: ${tramite.date}`,
+    `Direccion: ${tramite.address || 'Pendiente'}`,
+    `Solicitante: ${tramite.applicant || 'Juan Perez'}`,
+    `Funcionario asignado: ${tramite.reviewer || 'Pendiente de asignacion'}`,
+    '',
+    'Descripcion:',
+    tramite.description || 'Sin descripcion.',
+    '',
+    'Observaciones:',
+    tramite.observations || 'Sin observaciones.',
+    '',
+    'Documentos:',
+    documents,
+    '',
+    'Documento demostrativo sin validez legal.',
+  ].join('\n');
 }
 
 export function formatFileSize(size = 0) {

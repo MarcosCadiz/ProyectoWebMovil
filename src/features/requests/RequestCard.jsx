@@ -1,8 +1,10 @@
 import { OutlineButton } from '../../components/ui/AppButton';
 import Stepper from '../../components/ui/Stepper';
+import { downloadTextDocument } from '../../services/tramiteWorkspace';
 
 export default function RequestCard({ request }) {
   const documentCount = request.documents?.length || 0;
+  const detailPath = `/mis-solicitudes/${encodeURIComponent(request.id)}`;
 
   return (
     <article className="request-card">
@@ -19,7 +21,19 @@ export default function RequestCard({ request }) {
       </div>
       <div className="status-actions">
         <span className={`status-pill ${request.statusClass}`}>{request.status}</span>
-        <OutlineButton to={request.to}>{request.action}</OutlineButton>
+        <OutlineButton to={detailPath}>Ver Detalles</OutlineButton>
+        {request.certificate ? (
+          <button
+            className="card-download"
+            type="button"
+            onClick={() => downloadTextDocument(
+              request.certificate.name,
+              request.certificate.content,
+            )}
+          >
+            Descargar certificado
+          </button>
+        ) : null}
       </div>
     </article>
   );

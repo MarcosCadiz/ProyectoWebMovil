@@ -8,6 +8,7 @@ export const paths = {
   userMenu: '/menu-usuario',
   staffMenu: '/menu-funcionario',
   requests: '/mis-solicitudes',
+  requestDetail: '/mis-solicitudes/:id',
   review: '/revision-solicitudes',
   notifications: '/notificaciones',
   upload: '/subir-archivos',

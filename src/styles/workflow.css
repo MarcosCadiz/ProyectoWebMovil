@@ -408,15 +408,301 @@
   font-weight: 700;
 }
 
+.request-detail-layout,
+.help-layout {
+  width: min(1180px, calc(100% - 80px));
+  margin: 30px auto 0;
+}
+
+.request-detail-header,
+.help-context,
+.request-help-callout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.request-detail-header {
+  margin-top: 18px;
+  border-bottom: 1px solid #cfd6de;
+  padding-bottom: 22px;
+}
+
+.request-detail-header h1,
+.help-context h1 {
+  margin: 6px 0;
+  color: #0f69b4;
+}
+
+.request-detail-header p,
+.help-context p {
+  margin: 0;
+  color: #5c6670;
+}
+
+.detail-eyebrow,
+.help-context span {
+  color: #5c6670;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.detail-progress {
+  margin: 22px 0;
+  border: 1px solid #cfd6de;
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px 20px;
+}
+
+.detail-progress div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.detail-progress progress {
+  width: 100%;
+  height: 12px;
+  accent-color: #0f69b4;
+}
+
+.request-detail-grid,
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.detail-panel {
+  border: 1px solid #cfd6de;
+  border-radius: 8px;
+  background: #fff;
+  padding: 22px;
+}
+
+.detail-panel h2,
+.request-help-callout h2,
+.quick-questions h2 {
+  margin: 0 0 16px;
+  color: #0f69b4;
+  font-size: 20px;
+}
+
+.detail-panel h3 {
+  margin: 22px 0 8px;
+  font-size: 15px;
+}
+
+.detail-panel p {
+  color: #505b66;
+  line-height: 1.55;
+}
+
+.detail-list {
+  margin: 0;
+}
+
+.detail-list div {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  border-bottom: 1px solid #e4e8ed;
+  padding: 10px 0;
+}
+
+.detail-list dt {
+  color: #5c6670;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.detail-list dd {
+  margin: 0;
+  color: #222;
+}
+
+.detail-panel-heading,
+.detail-document-list article {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.detail-panel-heading button,
+.detail-document-list button,
+.wide-download {
+  border: 1px solid #0f69b4;
+  border-radius: 4px;
+  background: #fff;
+  color: #0f69b4;
+  padding: 8px 12px;
+  font-weight: 700;
+}
+
+.detail-document-list {
+  display: grid;
+  gap: 10px;
+}
+
+.detail-document-list article {
+  align-items: center;
+  border: 1px solid #d7dee7;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.detail-document-list span {
+  display: block;
+  margin-top: 4px;
+  color: #66717c;
+  font-size: 12px;
+}
+
+.wide-download {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.certificate-download {
+  border-color: #147d2b;
+  background: #147d2b;
+  color: #fff;
+}
+
+.detail-history {
+  margin-top: 20px;
+}
+
+.detail-history ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detail-history li {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 20px;
+  border-left: 3px solid #0f69b4;
+  padding: 4px 0 22px 18px;
+}
+
+.detail-history time {
+  color: #66717c;
+  font-size: 13px;
+}
+
+.detail-history p {
+  margin: 5px 0 0;
+}
+
+.request-help-callout {
+  margin-top: 20px;
+  border: 1px solid #b3d4f0;
+  border-radius: 8px;
+  background: #eaf4fc;
+  padding: 22px;
+}
+
+.request-help-callout h2 {
+  margin-bottom: 6px;
+}
+
+.request-help-callout p {
+  margin: 0;
+  color: #415263;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.missing-detail {
+  border: 1px solid #cfd6de;
+  border-radius: 8px;
+  background: #fff;
+  padding: 30px;
+}
+
+.help-context {
+  align-items: center;
+  border-bottom: 1px solid #cfd6de;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.help-grid {
+  grid-template-columns: 310px minmax(0, 1fr);
+}
+
+.quick-questions {
+  border: 1px solid #cfd6de;
+  border-radius: 8px;
+  background: #fff;
+  padding: 20px;
+}
+
+.quick-questions p {
+  color: #5c6670;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.quick-questions div {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.quick-questions button {
+  min-height: 44px;
+  border: 1px solid #b3d4f0;
+  border-radius: 6px;
+  background: #f7fbff;
+  color: #0f4f84;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.quick-questions button:hover {
+  background: #e6f0f9;
+}
+
+.help-grid .chat-messages {
+  min-height: 460px;
+  max-height: 560px;
+  overflow-y: auto;
+}
+
 @media (max-width: 980px) {
   .review-grid,
   .document-workspace-grid,
-  .form-grid {
+  .form-grid,
+  .request-detail-grid,
+  .help-grid {
     grid-template-columns: 1fr;
   }
 
   .workspace-header,
-  .preview-header {
+  .preview-header,
+  .request-detail-header,
+  .help-context,
+  .request-help-callout {
     display: grid;
+  }
+
+  .detail-list div,
+  .detail-history li {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-actions {
+    flex-wrap: wrap;
   }
 }

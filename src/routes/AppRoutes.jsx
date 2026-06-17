@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { paths } from './paths';
 import ChatAudiencia from '../pages/ChatAudiencia';
+import DetalleSolicitud from '../pages/DetalleSolicitud';
 import Inicio from '../pages/Inicio';
 import LoginFuncionario from '../pages/LoginFuncionario';
 import LoginUsuario from '../pages/LoginUsuario';
@@ -28,6 +29,7 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={['usuario']} redirectTo={paths.loginUser} />}>
         <Route path={paths.userMenu} element={<MenuUsuario />} />
         <Route path={paths.requests} element={<MisSolicitudes />} />
+        <Route path={paths.requestDetail} element={<DetalleSolicitud />} />
         <Route path={paths.notifications} element={<Notificaciones />} />
         <Route path={paths.upload} element={<SubirArchivos />} />
         <Route path={paths.chat} element={<ChatAudiencia />} />

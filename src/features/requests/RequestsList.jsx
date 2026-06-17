@@ -25,6 +25,15 @@ export default function RequestsList() {
           <RequestCard key={request.id} request={request} />
         ))}
       </section>
+      <section className="requests-help">
+        <div>
+          <h2>Ayuda sobre tramites y solicitudes</h2>
+          <p>
+            Consulta documentos requeridos, plazos estimados, estados y pasos para responder observaciones.
+          </p>
+        </div>
+        <PrimaryButton to={paths.chat}>Abrir Ayuda DOM</PrimaryButton>
+      </section>
     </main>
   );
 }
