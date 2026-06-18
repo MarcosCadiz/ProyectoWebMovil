@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/dev.mjs",
     "dev:web": "vite",
     "dev:api": "node server/index.js",
     "start:api": "node server/index.js",

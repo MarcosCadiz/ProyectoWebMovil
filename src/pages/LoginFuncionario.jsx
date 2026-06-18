@@ -40,6 +40,7 @@ export default function LoginFuncionario() {
           isLoading={isLoading}
           onSubmit={handleSubmit}
           registerPath={paths.register}
+          role="funcionario"
         />
       </section>
     </main>

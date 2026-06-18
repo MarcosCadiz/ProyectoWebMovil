@@ -1,4 +1,5 @@
 import { createApp } from '../server/app.js';
+import { getPool } from '../server/config/database.js';
 import { ensureDatabaseSchema } from '../server/services/databaseService.js';
 import { seedInitialUsers } from '../server/services/seedService.js';
 
@@ -7,6 +8,7 @@ await seedInitialUsers();
 
 const app = createApp();
 const server = app.listen(0);
+const registrationRut = `70${Date.now().toString().slice(-6)}-k`;
 
 function getBaseUrl() {
   const { port } = server.address();
@@ -40,6 +42,27 @@ try {
   const health = await request('/health');
   assert(health.response.status === 200, 'health status');
   assert(health.body.ok === true, 'health ok');
+
+  const registered = await request('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: 'Usuario Smoke',
+      rut: registrationRut,
+      email: 'smoke@example.com',
+      password: 'SmokeTest123',
+      role: 'usuario',
+    }),
+  });
+  assert(registered.response.status === 201, 'registrar usuario');
+
+  const registeredLogin = await request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      rut: registrationRut.replaceAll('.', ''),
+      password: 'SmokeTest123',
+    }),
+  });
+  assert(registeredLogin.response.status === 200, 'login usuario registrado');
 
   const userLogin = await request('/auth/login', {
     method: 'POST',
@@ -176,8 +199,15 @@ try {
   assert(missingType.body.error === 'TRAMITE_TYPE_REQUIRED', 'tramite sin tipo error');
 
   console.log(
-    'api-evidence-ok: CRUD, JWT/roles, documentos, resoluciones, notificaciones, paginacion, XSS bloqueado y errores controlados',
+    'api-evidence-ok: registro/login, usuarios demo, CRUD, JWT/roles, documentos, resoluciones, notificaciones, paginacion, XSS y errores',
   );
 } finally {
   server.close();
+  const pool = getPool();
+  if (pool) {
+    await pool.query(
+      "DELETE FROM users WHERE regexp_replace(lower(rut), '[^0-9k]', '', 'g') = $1",
+      [registrationRut.toLowerCase().replace(/[^0-9k]/g, '')],
+    );
+  }
 }

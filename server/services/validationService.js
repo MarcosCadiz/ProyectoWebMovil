@@ -1,11 +1,13 @@
-const rutPattern = /^\d{1,2}\.?\d{3}\.?\d{3}-[\dkK]$/;
+const rutPattern = /^\d{7,8}[\dk]$/;
 const allowedRoles = new Set(['usuario', 'funcionario']);
 const allowedDecisions = new Set(['Aprobado', 'Rechazado', 'Observado']);
 
 export function validateRegistration({ name, rut, password, role }) {
   if (!name || !rut || !password) throw new Error('MISSING_REQUIRED_FIELDS');
   if (name.length < 3 || name.length > 120) throw new Error('INVALID_NAME');
-  if (!rutPattern.test(rut)) throw new Error('INVALID_RUT');
+  if (!rutPattern.test(String(rut).toLowerCase().replace(/[^0-9k]/g, ''))) {
+    throw new Error('INVALID_RUT');
+  }
   if (password.length < 8) throw new Error('PASSWORD_TOO_SHORT');
   if (password.length > 72) throw new Error('PASSWORD_TOO_LONG');
   if (!allowedRoles.has(role)) throw new Error('INVALID_ROLE');

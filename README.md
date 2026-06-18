@@ -130,17 +130,13 @@ Notas:
 
 ## Ejecución local
 
-Terminal 1 — API:
-
-```bash
-npm run dev:api
-```
-
-Terminal 2 — frontend:
+Iniciar frontend y API juntos:
 
 ```bash
 npm run dev
 ```
+
+Para ejecutarlos por separado, use `npm run dev:api` y `npm run dev:web` en terminales distintas.
 
 Direcciones:
 

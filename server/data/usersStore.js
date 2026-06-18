@@ -24,8 +24,11 @@ export async function findUserByRut(rut) {
 
   if (pool) {
     const result = await pool.query(
-      'SELECT id, name, rut, email, department, password_hash, role, created_at FROM users WHERE rut = $1 LIMIT 1',
-      [normalizedRut],
+      `SELECT id, name, rut, email, department, password_hash, role, created_at
+       FROM users
+       WHERE regexp_replace(lower(rut), '[^0-9k]', '', 'g') = $1
+       LIMIT 1`,
+      [rutLookupKey(normalizedRut)],
     );
 
     return mapDbUser(result.rows[0]);
@@ -72,6 +75,29 @@ export async function createUser(user) {
   return savedUser;
 }
 
+export async function updateUserCredentials(rut, { name, role, passwordHash }) {
+  const normalizedRut = normalizeRut(rut);
+  const pool = getPool();
+
+  if (pool) {
+    const result = await pool.query(
+      `UPDATE users
+       SET name = $2, role = $3, password_hash = $4, updated_at = NOW()
+       WHERE regexp_replace(lower(rut), '[^0-9k]', '', 'g') = $1
+       RETURNING id, name, rut, email, department, password_hash, role, created_at`,
+      [rutLookupKey(normalizedRut), name, role, passwordHash],
+    );
+
+    return mapDbUser(result.rows[0]);
+  }
+
+  const existing = usersByRut.get(normalizedRut);
+  if (!existing) return null;
+
+  Object.assign(existing, { name, role, passwordHash });
+  return existing;
+}
+
 export async function listUsers() {
   const pool = getPool();
 
@@ -94,5 +120,11 @@ export function sanitizeUser(user) {
 }
 
 export function normalizeRut(rut = '') {
-  return String(rut).trim().toLowerCase();
+  const compact = rutLookupKey(rut);
+  if (compact.length < 2) return compact;
+  return `${compact.slice(0, -1)}-${compact.slice(-1)}`;
+}
+
+function rutLookupKey(rut = '') {
+  return String(rut).trim().toLowerCase().replace(/[^0-9k]/g, '');
 }

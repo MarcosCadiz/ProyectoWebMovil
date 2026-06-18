@@ -25,6 +25,12 @@ export default function RegistroUsuario({ role = 'usuario' }) {
         setError('Completa nombre, RUT y contrasena para crear la cuenta');
       } else if (apiError === 'PASSWORD_TOO_SHORT') {
         setError('La contrasena debe tener al menos 8 caracteres');
+      } else if (apiError === 'PASSWORD_TOO_LONG') {
+        setError('La contrasena no puede superar 72 caracteres');
+      } else if (apiError === 'INVALID_RUT') {
+        setError('Ingresa un RUT valido, por ejemplo 12.345.678-9');
+      } else if (apiError === 'INVALID_NAME') {
+        setError('El nombre debe tener entre 3 y 120 caracteres');
       } else if (apiError === 'USER_ALREADY_EXISTS') {
         setError('Ya existe una cuenta asociada a ese RUT');
       } else if (apiError === 'INVALID_ROLE') {

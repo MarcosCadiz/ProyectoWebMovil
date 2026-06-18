@@ -1,6 +1,11 @@
 import { createTramiteStore, listTramitesStore } from '../data/tramitesStore.js';
-import { createUser, findUserByRut, sanitizeUser } from '../data/usersStore.js';
-import { hashPassword } from './passwordService.js';
+import {
+  createUser,
+  findUserByRut,
+  sanitizeUser,
+  updateUserCredentials,
+} from '../data/usersStore.js';
+import { comparePassword, hashPassword } from './passwordService.js';
 
 const seedUsers = [
   {
@@ -19,14 +24,25 @@ const seedUsers = [
 
 export async function seedInitialUsers() {
   for (const user of seedUsers) {
-    if (await findUserByRut(user.rut)) continue;
+    const existing = await findUserByRut(user.rut);
+    const passwordMatches = existing
+      ? await comparePassword(user.password, existing.passwordHash)
+      : false;
 
-    await createUser({
-      name: user.name,
-      rut: user.rut,
-      role: user.role,
-      passwordHash: await hashPassword(user.password),
-    });
+    if (!existing) {
+      await createUser({
+        name: user.name,
+        rut: user.rut,
+        role: user.role,
+        passwordHash: await hashPassword(user.password),
+      });
+    } else if (!passwordMatches || existing.role !== user.role || existing.name !== user.name) {
+      await updateUserCredentials(user.rut, {
+        name: user.name,
+        role: user.role,
+        passwordHash: await hashPassword(user.password),
+      });
+    }
   }
 
   const demoUser = sanitizeUser(await findUserByRut('12.345.678-9'));
