@@ -402,6 +402,10 @@ Authorization: Bearer <accessToken>
 GET  /api/users/me
 GET  /api/tramites
 POST /api/tramites
+GET  /api/tramites/:id
+PUT  /api/tramites/:id
+PATCH /api/tramites/:id
+DELETE /api/tramites/:id
 ```
 
 ### Protegida por rol funcionario
@@ -431,6 +435,9 @@ La colección valida:
 - `GET /api/users` con rol funcionario.
 - `GET /api/tramites`
 - `POST /api/tramites`
+- `GET /api/tramites/:id`
+- `PUT/PATCH /api/tramites/:id`
+- `DELETE /api/tramites/:id`
 - Casos negativos: token faltante, credenciales inválidas y trámite sin tipo.
 
 ### Evidencia de ejecución
@@ -449,6 +456,12 @@ Resultado:
 
 También se ejecutó una prueba de API que verificó:
 
+```bash
+npm run test:api
+```
+
+La prueba levanta la API en un puerto temporal y verifica:
+
 ```txt
 health
 login usuario
@@ -456,13 +469,16 @@ login funcionario
 users/me
 users
 crear tramite
+obtener tramite por id
+actualizar tramite
+eliminar tramite
 error controlado TRAMITE_TYPE_REQUIRED
 ```
 
 Resultado:
 
 ```txt
-api-evidence-ok: health, login usuario, login funcionario, users/me, users, crear tramite, error controlado
+api-evidence-ok: health, login usuario, login funcionario, users/me, users, crear/obtener/actualizar/eliminar tramite, error controlado
 ```
 
 Validación de colección Postman:

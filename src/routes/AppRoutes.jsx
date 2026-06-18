@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { paths } from './paths';
 import ChatAudiencia from '../pages/ChatAudiencia';
+import DetalleSolicitud from '../pages/DetalleSolicitud';
 import Inicio from '../pages/Inicio';
 import LoginFuncionario from '../pages/LoginFuncionario';
 import LoginUsuario from '../pages/LoginUsuario';
@@ -13,6 +14,7 @@ import RegistroFuncionario from '../pages/RegistroFuncionario';
 import RegistroTipoUsuario from '../pages/RegistroTipoUsuario';
 import RegistroUsuario from '../pages/RegistroUsuario';
 import RevisionSolicitudes from '../pages/RevisionSolicitudes';
+import ResolucionTramite from '../pages/ResolucionTramite';
 import SubirArchivos from '../pages/SubirArchivos';
 
 export default function AppRoutes() {
@@ -28,6 +30,7 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={['usuario']} redirectTo={paths.loginUser} />}>
         <Route path={paths.userMenu} element={<MenuUsuario />} />
         <Route path={paths.requests} element={<MisSolicitudes />} />
+        <Route path={paths.requestDetail} element={<DetalleSolicitud />} />
         <Route path={paths.notifications} element={<Notificaciones />} />
         <Route path={paths.upload} element={<SubirArchivos />} />
         <Route path={paths.chat} element={<ChatAudiencia />} />
@@ -36,6 +39,7 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={['funcionario']} redirectTo={paths.loginStaff} />}>
         <Route path={paths.staffMenu} element={<MenuFuncionario />} />
         <Route path={paths.review} element={<RevisionSolicitudes />} />
+        <Route path={paths.resolution} element={<ResolucionTramite />} />
       </Route>
     </Routes>
   );

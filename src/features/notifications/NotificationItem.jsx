@@ -25,7 +25,14 @@ export default function NotificationItem({ notification }) {
         </p>
         <time>{notification.time}</time>
       </div>
-      <OutlineButton to={notification.to}>{notification.action}</OutlineButton>
+      <div className="notification-actions">
+        <OutlineButton to={notification.to}>{notification.action}</OutlineButton>
+        {notification.helpTo ? (
+          <OutlineButton className="notification-help-button" to={notification.helpTo}>
+            Consultar ayuda
+          </OutlineButton>
+        ) : null}
+      </div>
     </article>
   );
 }

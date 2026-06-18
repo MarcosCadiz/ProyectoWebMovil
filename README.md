@@ -126,6 +126,20 @@ DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
 
 Si `DATABASE_URL` no esta configurado o PostgreSQL no esta disponible, la API puede funcionar con datos en memoria para pruebas locales.
 
+Para un equipo de trabajo se recomienda una base PostgreSQL remota. Cada integrante debe guardar la misma URL en su archivo local `.env`:
+
+```txt
+DATABASE_URL=postgresql://USUARIO:CONTRASENA@HOST-REMOTO/NOMBRE_BASE?sslmode=require
+DATABASE_SSL=true
+```
+
+La URL es secreta y nunca debe incluirse en GitHub. Luego se prepara y verifica la base con:
+
+```bash
+npm run db:migrate
+npm run db:verify
+```
+
 ## Ejecucion
 
 Levantar frontend:
@@ -167,6 +181,7 @@ npm run dev:api    Levanta la API Node.js/Express
 npm run start:api  Levanta la API en modo normal
 npm run build      Compila el frontend
 npm run preview    Previsualiza la build
+npm run test:api   Ejecuta prueba smoke de API, JWT, roles y CRUD
 ```
 
 ## Flujos principales
@@ -231,6 +246,10 @@ Rutas protegidas:
 GET  /api/users/me
 GET  /api/tramites
 POST /api/tramites
+GET  /api/tramites/:id
+PUT  /api/tramites/:id
+PATCH /api/tramites/:id
+DELETE /api/tramites/:id
 ```
 
 Ruta protegida por rol funcionario:
@@ -259,7 +278,7 @@ La coleccion Postman esta disponible en:
 
 [postman/DOM_Santo_Domingo_API.postman_collection.json](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
-La coleccion permite validar healthcheck, login, registro, rutas protegidas, control de roles, tramites y errores esperados.
+La coleccion permite validar healthcheck, login, registro, rutas protegidas, control de roles, CRUD de tramites y errores esperados.
 
 Para ejecutarla:
 
@@ -268,6 +287,12 @@ npm run dev:api
 ```
 
 Luego importar la coleccion en Postman o Insomnia y ejecutar los requests en orden.
+
+Tambien se puede ejecutar una verificacion automatizada local:
+
+```bash
+npm run test:api
+```
 
 ## Base de datos
 
@@ -312,6 +337,7 @@ Documentos complementarios:
 
 - [Endpoints API](./docs/api-endpoints.md)
 - [Modelo relacional](./docs/modelo-relacional.md)
+- [Evidencia final EF1-EF5](./docs/evidencia-final-ef1-ef5.md)
 - [Coleccion Postman](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
 ## Estado actual

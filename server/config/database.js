@@ -1,5 +1,6 @@
 import pg from 'pg';
 import { env } from './env.js';
+import { normalizeDatabaseUrl } from './connectionString.js';
 
 let pool;
 let databaseAvailable = true;
@@ -11,7 +12,8 @@ export function getPool() {
 
   if (!pool) {
     pool = new pg.Pool({
-      connectionString: env.databaseUrl,
+      connectionString: normalizeDatabaseUrl(env.databaseUrl),
+      ssl: env.databaseSsl ? { rejectUnauthorized: true } : false,
     });
   }
 
