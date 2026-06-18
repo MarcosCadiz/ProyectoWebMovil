@@ -10,6 +10,7 @@ import {
   formatFileSize,
   tramiteTypes,
 } from '../../services/tramiteWorkspace';
+import { createTramite } from '../../services/tramiteApi';
 
 const initialForm = {
   tipo: tramiteTypes[0],
@@ -47,15 +48,23 @@ export default function UploadPanel() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function handleFileChange(event) {
+  async function handleFileChange(event) {
     const selectedFiles = Array.from(event.target.files || []);
 
-    const mappedFiles = selectedFiles.map((file) => ({
-      id: `${file.name}-${file.lastModified}-${Date.now()}`,
-      name: file.name,
-      category,
-      size: formatFileSize(file.size),
-      status: 'Listo para enviar',
+    const mappedFiles = await Promise.all(selectedFiles.map(async (file) => {
+      const isText = file.type.startsWith('text/') || /\.(txt|csv|json|md)$/i.test(file.name);
+      const content = isText
+        ? await file.text()
+        : `Archivo binario demo: ${file.name}. Tipo: ${file.type || 'desconocido'}. Tamano: ${formatFileSize(file.size)}.`;
+
+      return {
+        id: `${file.name}-${file.lastModified}-${Date.now()}`,
+        name: file.name,
+        category,
+        size: formatFileSize(file.size),
+        status: 'Listo para enviar',
+        content,
+      };
     }));
 
     setDocuments((current) => [...current, ...mappedFiles]);
@@ -66,17 +75,33 @@ export default function UploadPanel() {
     setDocuments((current) => current.filter((document) => document.id !== id));
   }
 
-  function persistTramite(status) {
+  async function persistTramite(status) {
     if (!form.direccion.trim() || !form.descripcion.trim()) {
       setFeedback('Completa direccion y descripcion antes de guardar la solicitud.');
       return;
     }
 
-    addTramite(createLocalTramite({
-      ...form,
-      documents,
-      generatedDocument,
-    }, status));
+    if (status === 'Borrador') {
+      addTramite(createLocalTramite({
+        ...form,
+        documents,
+        generatedDocument,
+      }, status));
+    } else {
+      try {
+        await createTramite({
+          tipo: form.tipo,
+          direccion: form.direccion,
+          descripcion: form.descripcion,
+          observaciones: form.observaciones,
+          contenidoSolicitud: generatedDocument,
+          documents,
+        });
+      } catch {
+        setFeedback('No fue posible conectar con la API. Verifica que el backend este activo.');
+        return;
+      }
+    }
 
     setFeedback(status === 'Borrador'
       ? 'Borrador guardado en Mis Solicitudes.'
@@ -195,7 +220,7 @@ export default function UploadPanel() {
         <pre>{generatedDocument}</pre>
       </section>
 
-      {feedback ? <p className="form-feedback">{feedback}</p> : null}
+      {feedback ? <p className="form-feedback" role="status" aria-live="polite">{feedback}</p> : null}
 
       <div className="upload-actions">
         <OutlineButton to={paths.requests}>Cancelar</OutlineButton>

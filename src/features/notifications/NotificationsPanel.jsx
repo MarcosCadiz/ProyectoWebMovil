@@ -1,12 +1,47 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { notifications as initialNotifications } from '../../data/mockData';
+import {
+  fetchNotifications,
+  markAllNotificationsRead as markAllNotificationsReadApi,
+} from '../../services/notificationsApi';
 import NotificationItem from './NotificationItem';
+
+function mapApiNotification(notification) {
+  const tramiteId = notification.tramiteId;
+
+  return {
+    id: notification.id,
+    icon: notification.title.includes('Aprobado') ? 'OK' : '!',
+    iconClass: notification.title.includes('Aprobado') ? 'success' : '',
+    unread: !notification.readAt,
+    title: notification.title,
+    description: notification.body,
+    highlight: tramiteId || '',
+    time: new Date(notification.createdAt).toLocaleString('es-CL'),
+    action: tramiteId ? 'Ver Tramite' : 'Ver Solicitudes',
+    to: tramiteId ? `/mis-solicitudes/${encodeURIComponent(tramiteId)}` : '/mis-solicitudes',
+    helpTo: tramiteId ? `/chat-audiencia?tramite=${encodeURIComponent(tramiteId)}` : '/chat-audiencia',
+  };
+}
 
 export default function NotificationsPanel() {
   const [notifications, setNotifications] = useState(initialNotifications);
 
-  function markAllRead(event) {
+  useEffect(() => {
+    fetchNotifications()
+      .then((items) => {
+        if (items.length) setNotifications(items.map(mapApiNotification));
+      })
+      .catch(() => {});
+  }, []);
+
+  async function markAllRead(event) {
     event.preventDefault();
+    try {
+      await markAllNotificationsReadApi();
+    } catch {
+      // Mantiene respuesta local si la API no esta disponible.
+    }
     setNotifications((current) => current.map((notification) => ({
       ...notification,
       unread: false,

@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import PageShell from '../components/layout/PageShell';
 import PublicNavbar from '../components/navigation/PublicNavbar';
 import { OutlineButton, PrimaryButton } from '../components/ui/AppButton';
@@ -8,6 +9,7 @@ import {
   downloadTextDocument,
   findTramite,
 } from '../services/tramiteWorkspace';
+import { deleteTramite, fetchTramite, updateTramite } from '../services/tramiteApi';
 
 function downloadableContent(tramite, document) {
   return document.content || [
@@ -22,7 +24,38 @@ function downloadableContent(tramite, document) {
 
 export default function DetalleSolicitud() {
   const { id } = useParams();
-  const tramite = findTramite(id);
+  const navigate = useNavigate();
+  const [tramite, setTramite] = useState(() => findTramite(id));
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ descripcion: '', observaciones: '' });
+  const [actionError, setActionError] = useState('');
+
+  useEffect(() => {
+    fetchTramite(id)
+      .then((data) => {
+        setTramite(data);
+        setEditForm({
+          descripcion: data.description || '',
+          observaciones: data.observations || '',
+        });
+      })
+      .catch(() => setTramite((current) => current || findTramite(id)))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading && !tramite) {
+    return (
+      <PageShell>
+        <PublicNavbar />
+        <main className="container-center">
+          <section className="request-detail missing-detail">
+            <h1>Cargando expediente...</h1>
+          </section>
+        </main>
+      </PageShell>
+    );
+  }
 
   if (!tramite) {
     return (
@@ -37,6 +70,29 @@ export default function DetalleSolicitud() {
         </main>
       </PageShell>
     );
+  }
+
+  async function saveChanges() {
+    try {
+      const updated = await updateTramite(tramite.id, editForm);
+      setTramite(updated);
+      setEditing(false);
+      setActionError('');
+    } catch {
+      setActionError('No fue posible actualizar el tramite.');
+    }
+  }
+
+  async function removeTramite() {
+    const confirmed = window.confirm(`Eliminar definitivamente la solicitud ${tramite.id}?`);
+    if (!confirmed) return;
+
+    try {
+      await deleteTramite(tramite.id);
+      navigate(paths.requests);
+    } catch {
+      setActionError('No fue posible eliminar el tramite.');
+    }
   }
 
   return (
@@ -73,9 +129,46 @@ export default function DetalleSolicitud() {
               <div><dt>Funcionario asignado</dt><dd>{tramite.reviewer || 'Pendiente de asignacion'}</dd></div>
             </dl>
             <h3>Descripcion</h3>
-            <p>{tramite.description || 'Sin descripcion registrada.'}</p>
+            {editing ? (
+              <textarea
+                className="detail-edit-textarea"
+                aria-label="Descripcion de la solicitud"
+                value={editForm.descripcion}
+                onChange={(event) => setEditForm((current) => ({
+                  ...current,
+                  descripcion: event.target.value,
+                }))}
+              />
+            ) : <p>{tramite.description || 'Sin descripcion registrada.'}</p>}
             <h3>Observaciones vigentes</h3>
-            <p>{tramite.observations || 'No existen observaciones vigentes.'}</p>
+            {editing ? (
+              <textarea
+                className="detail-edit-textarea"
+                aria-label="Observaciones de la solicitud"
+                value={editForm.observaciones}
+                onChange={(event) => setEditForm((current) => ({
+                  ...current,
+                  observaciones: event.target.value,
+                }))}
+              />
+            ) : <p>{tramite.observations || 'No existen observaciones vigentes.'}</p>}
+
+            {!['Aprobado', 'Rechazado'].includes(tramite.status) ? (
+              <div className="detail-crud-actions">
+                {editing ? (
+                  <>
+                    <button type="button" onClick={() => setEditing(false)}>Cancelar</button>
+                    <button type="button" className="primary-crud" onClick={saveChanges}>Guardar cambios</button>
+                  </>
+                ) : (
+                  <>
+                    <button type="button" onClick={() => setEditing(true)}>Editar solicitud</button>
+                    <button type="button" className="danger-crud" onClick={removeTramite}>Eliminar solicitud</button>
+                  </>
+                )}
+              </div>
+            ) : null}
+            {actionError ? <p className="detail-action-error" role="alert">{actionError}</p> : null}
           </section>
 
           <section className="detail-panel">
@@ -137,6 +230,19 @@ export default function DetalleSolicitud() {
                 Descargar certificado aprobado
               </button>
             ) : null}
+
+            {tramite.resolution ? (
+              <button
+                className="wide-download certificate-download"
+                type="button"
+                onClick={() => downloadTextDocument(
+                  `Resolucion_${tramite.resolution.folio}.txt`,
+                  tramite.resolution.document,
+                )}
+              >
+                Descargar resolucion {tramite.resolution.decision.toLowerCase()}
+              </button>
+            ) : null}
           </section>
         </div>
 
@@ -154,6 +260,21 @@ export default function DetalleSolicitud() {
             ))}
           </ol>
         </section>
+
+        {tramite.resolution ? (
+          <section className="detail-panel user-resolution">
+            <div>
+              <span>Resolucion emitida</span>
+              <h2>{tramite.resolution.decision} - Folio {tramite.resolution.folio}</h2>
+              <p>{tramite.resolution.fundamento}</p>
+            </div>
+            <ol>
+              {(tramite.resolution.nextSteps || []).map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
         <section className="request-help-callout">
           <div>

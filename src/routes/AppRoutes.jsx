@@ -14,6 +14,7 @@ import RegistroFuncionario from '../pages/RegistroFuncionario';
 import RegistroTipoUsuario from '../pages/RegistroTipoUsuario';
 import RegistroUsuario from '../pages/RegistroUsuario';
 import RevisionSolicitudes from '../pages/RevisionSolicitudes';
+import ResolucionTramite from '../pages/ResolucionTramite';
 import SubirArchivos from '../pages/SubirArchivos';
 
 export default function AppRoutes() {
@@ -38,6 +39,7 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={['funcionario']} redirectTo={paths.loginStaff} />}>
         <Route path={paths.staffMenu} element={<MenuFuncionario />} />
         <Route path={paths.review} element={<RevisionSolicitudes />} />
+        <Route path={paths.resolution} element={<ResolucionTramite />} />
       </Route>
     </Routes>
   );

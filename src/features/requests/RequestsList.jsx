@@ -2,13 +2,18 @@ import { useEffect, useState } from 'react';
 import { PrimaryButton } from '../../components/ui/AppButton';
 import { paths } from '../../routes/paths';
 import { loadTramites } from '../../services/tramiteWorkspace';
+import { fetchTramites } from '../../services/tramiteApi';
 import RequestCard from './RequestCard';
 
 export default function RequestsList() {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    setRequests(loadTramites());
+    const localDrafts = loadTramites().filter((request) => request.status === 'Borrador');
+
+    fetchTramites()
+      .then((apiRequests) => setRequests([...localDrafts, ...apiRequests]))
+      .catch(() => setRequests(loadTramites()));
   }, []);
 
   return (

@@ -271,6 +271,50 @@ Errores:
 - `401 AUTH_TOKEN_REQUIRED`
 - `404 TRAMITE_NOT_FOUND`
 
+### POST /tramites/:id/decision
+
+Emite una resolucion de funcionario y actualiza el estado del expediente. Requiere rol `funcionario`.
+
+Body:
+
+```json
+{
+  "decision": "Aprobado",
+  "fundamento": "Los antecedentes cumplen los criterios revisados.",
+  "document": "Texto completo de la resolucion emitida.",
+  "nextSteps": [
+    "Firmar digitalmente ante un proveedor autorizado",
+    "Presentar la resolucion ante la DOM"
+  ],
+  "folio": "RES-2026-000123"
+}
+```
+
+Respuesta `201`:
+
+- Tramite actualizado.
+- Documentos enviados por el usuario.
+- Resolucion emitida.
+- Folio y pasos posteriores visibles para el usuario.
+
+Errores:
+
+- `400 INVALID_TRAMITE_DECISION`
+- `400 RESOLUTION_FIELDS_REQUIRED`
+- `401 AUTH_TOKEN_REQUIRED`
+- `403 INSUFFICIENT_ROLE`
+- `404 TRAMITE_NOT_FOUND`
+
+## Persistencia compartida
+
+Cuando `DATABASE_URL` esta configurada, la API guarda:
+
+- Expedientes en `tramites`.
+- Antecedentes aportados por usuarios en `tramite_documentos`.
+- Resoluciones de funcionarios en `tramite_resoluciones`.
+
+Usuarios y funcionarios consultan la misma fuente mediante la API. Si PostgreSQL no esta configurado, se utiliza el mismo contrato con almacenamiento temporal en memoria.
+
 ## Pruebas Postman
 
 Coleccion:

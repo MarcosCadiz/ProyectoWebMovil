@@ -1,15 +1,16 @@
-import { createUser, findUserByRut } from '../data/usersStore.js';
+import { createTramiteStore, listTramitesStore } from '../data/tramitesStore.js';
+import { createUser, findUserByRut, sanitizeUser } from '../data/usersStore.js';
 import { hashPassword } from './passwordService.js';
 
 const seedUsers = [
   {
-    name: 'Juan Pérez',
+    name: 'Juan Perez',
     rut: '12.345.678-9',
     password: 'Usuario123',
     role: 'usuario',
   },
   {
-    name: 'Roberto Gómez',
+    name: 'Roberto Gomez',
     rut: '9.876.543-2',
     password: 'Funcionario123',
     role: 'funcionario',
@@ -26,5 +27,32 @@ export async function seedInitialUsers() {
       role: user.role,
       passwordHash: await hashPassword(user.password),
     });
+  }
+
+  const demoUser = sanitizeUser(await findUserByRut('12.345.678-9'));
+  const existingTramites = await listTramitesStore(demoUser);
+
+  if (!existingTramites.length) {
+    await createTramiteStore({
+      tipo: 'Permiso de Obra Menor',
+      direccion: 'Las Araucarias 450, Santo Domingo',
+      descripcion: 'Solicitud demo de ampliacion menor de vivienda.',
+      observaciones: 'Antecedentes enviados para revision normativa.',
+      contenidoSolicitud: 'Solicitud digital demo generada por Juan Perez.',
+      documents: [
+        {
+          name: 'Formulario_Solicitud.pdf',
+          category: 'Formulario DOM',
+          size: '184 KB',
+          content: 'Formulario oficial demo enviado por el usuario Juan Perez.',
+        },
+        {
+          name: 'Plano_Arquitectura.pdf',
+          category: 'Plano',
+          size: '1.8 MB',
+          content: 'Plano demo A-01, escala referencial 1:100.',
+        },
+      ],
+    }, demoUser);
   }
 }

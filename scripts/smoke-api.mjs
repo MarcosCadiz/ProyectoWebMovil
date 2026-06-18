@@ -72,16 +72,33 @@ try {
   assert(users.response.status === 200, 'users');
   assert(Array.isArray(users.body.users), 'users array');
 
+  const paginated = await request('/tramites?limit=1&offset=0', { headers: userAuth });
+  assert(paginated.response.status === 200, 'tramites paginados');
+  assert(paginated.body.tramites.length <= 1, 'limite de paginacion');
+  assert(paginated.body.pagination.limit === 1, 'metadata paginacion');
+
   const created = await request('/tramites', {
     method: 'POST',
     headers: userAuth,
     body: JSON.stringify({
       tipo: 'Permiso de Obra Menor',
       descripcion: 'Solicitud creada por smoke test',
+      direccion: 'Av. Test 123, Santo Domingo',
+      observaciones: 'Sin observaciones del solicitante',
+      contenidoSolicitud: 'Formulario digital generado por smoke test',
+      documents: [
+        {
+          name: 'Plano_Test.pdf',
+          category: 'Plano',
+          size: '120 KB',
+          content: 'Contenido demo del plano enviado por el usuario',
+        },
+      ],
     }),
   });
   assert(created.response.status === 201, 'crear tramite');
   assert(created.body.tramite.id, 'tramite id');
+  assert(created.body.tramite.documents.length === 1, 'documento persistido');
 
   const tramiteId = created.body.tramite.id;
 
@@ -100,6 +117,48 @@ try {
   assert(updated.response.status === 200, 'actualizar tramite');
   assert(updated.body.tramite.estado === 'En Revision', 'estado actualizado');
 
+  const decided = await request(`/tramites/${tramiteId}/decision`, {
+    method: 'POST',
+    headers: staffAuth,
+    body: JSON.stringify({
+      decision: 'Aprobado',
+      fundamento: 'Cumple los criterios revisados en la prueba automatizada.',
+      document: 'Resolucion de aprobacion generada por smoke test.',
+      nextSteps: ['Firmar digitalmente', 'Presentar ante DOM'],
+      folio: 'RES-SMOKE-001',
+    }),
+  });
+  assert(decided.response.status === 201, 'emitir resolucion');
+  assert(decided.body.tramite.estado === 'Aprobado', 'tramite aprobado');
+  assert(decided.body.tramite.resolution.folio === 'RES-SMOKE-001', 'resolucion persistida');
+
+  const resolvedForUser = await request(`/tramites/${tramiteId}`, { headers: userAuth });
+  assert(resolvedForUser.body.tramite.resolution.nextSteps.length === 2, 'pasos posteriores visibles');
+
+  const notificationList = await request('/notifications', { headers: userAuth });
+  assert(notificationList.response.status === 200, 'listar notificaciones');
+  assert(
+    notificationList.body.notifications.some((notification) => notification.tramiteId === tramiteId),
+    'notificacion de resolucion',
+  );
+
+  const markAllRead = await request('/notifications/read-all', {
+    method: 'PATCH',
+    headers: userAuth,
+  });
+  assert(markAllRead.response.status === 204, 'marcar notificaciones leidas');
+
+  const unsafePayload = await request('/tramites', {
+    method: 'POST',
+    headers: userAuth,
+    body: JSON.stringify({
+      tipo: '<script>alert(1)</script>',
+      descripcion: 'Intento XSS',
+    }),
+  });
+  assert(unsafePayload.response.status === 400, 'xss bloqueado');
+  assert(unsafePayload.body.error === 'UNSAFE_INPUT', 'codigo xss');
+
   const deleted = await request(`/tramites/${tramiteId}`, {
     method: 'DELETE',
     headers: userAuth,
@@ -117,7 +176,7 @@ try {
   assert(missingType.body.error === 'TRAMITE_TYPE_REQUIRED', 'tramite sin tipo error');
 
   console.log(
-    'api-evidence-ok: health, login usuario, login funcionario, users/me, users, crear/obtener/actualizar/eliminar tramite, error controlado',
+    'api-evidence-ok: CRUD, JWT/roles, documentos, resoluciones, notificaciones, paginacion, XSS bloqueado y errores controlados',
   );
 } finally {
   server.close();

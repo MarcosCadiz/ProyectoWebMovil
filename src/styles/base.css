@@ -20,6 +20,23 @@ button {
   cursor: pointer;
 }
 
+:focus-visible {
+  outline: 3px solid #ffbf47;
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .button-link {
   text-decoration: none;
 }
@@ -67,4 +84,26 @@ button {
 .container-center {
   width: min(878px, calc(100% - 80px));
   margin: 30px auto 0;
+}
+
+@media (max-width: 640px) {
+  .container-narrow,
+  .container-center {
+    width: calc(100% - 32px);
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

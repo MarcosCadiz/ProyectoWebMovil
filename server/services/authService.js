@@ -1,19 +1,10 @@
 import { createUser, findUserByRut, sanitizeUser } from '../data/usersStore.js';
 import { comparePassword, hashPassword } from './passwordService.js';
 import { createAccessToken } from './tokenService.js';
+import { validateRegistration } from './validationService.js';
 
 export async function registerUser({ name, rut, password, role = 'usuario', email = '', department = '' }) {
-  if (!name || !rut || !password) {
-    throw new Error('MISSING_REQUIRED_FIELDS');
-  }
-
-  if (!['usuario', 'funcionario'].includes(role)) {
-    throw new Error('INVALID_ROLE');
-  }
-
-  if (password.length < 8) {
-    throw new Error('PASSWORD_TOO_SHORT');
-  }
+  validateRegistration({ name, rut, password, role });
 
   const passwordHash = await hashPassword(password);
   const user = await createUser({

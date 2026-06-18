@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import authRoutes from './authRoutes.js';
 import tramitesRoutes from './tramitesRoutes.js';
+import notificationsRoutes from './notificationsRoutes.js';
 import userRoutes from './userRoutes.js';
 import { jwks } from '../controllers/jwksController.js';
 
@@ -20,5 +21,6 @@ router.get('/.well-known/jwks.json', jwks);
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/tramites', tramitesRoutes);
+router.use('/notifications', notificationsRoutes);
 
 export default router;

@@ -8,6 +8,17 @@
   border-radius: 8px;
 }
 
+.staff-inbox-wide,
+.staff-review-wide,
+.resolution-workspace {
+  width: min(1280px, calc(100% - 80px));
+}
+
+.staff-intro {
+  margin: -14px 0 24px;
+  color: #59636e;
+}
+
 .staff-content h1 {
   color: #0f69b4;
   font-size: 24px;
@@ -69,6 +80,16 @@
   color: #0f69b4;
 }
 
+.table-status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.table-status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
 .table-action {
   background: #0f69b4;
   color: #fff;
@@ -85,8 +106,214 @@
   color: #0f69b4;
 }
 
+.table-scroll {
+  overflow-x: auto;
+}
+
+.staff-error {
+  border-left: 4px solid #e31837;
+  background: #fff0f2;
+  color: #8f1528;
+  padding: 12px 14px;
+}
+
+.staff-document-primary {
+  width: 100%;
+  border: 1px solid #0f69b4;
+  border-radius: 4px;
+  background: #0f69b4;
+  color: #fff;
+  padding: 10px 14px;
+  font-weight: 700;
+}
+
+.staff-doc-title {
+  margin-top: 26px;
+}
+
+.resolution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  border-bottom: 1px solid #ccd3da;
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+}
+
+.resolution-header h1 {
+  margin: 8px 0;
+}
+
+.resolution-header p {
+  margin: 0;
+  color: #59636e;
+}
+
+.decision-badge {
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.decision-aprobado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.decision-rechazado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.decision-observado {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.resolution-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.8fr) minmax(0, 1.2fr);
+  gap: 20px;
+}
+
+.resolution-form-panel,
+.resolution-preview,
+.resolution-success {
+  border: 1px solid #ccd3da;
+  border-radius: 8px;
+  background: #fff;
+  padding: 22px;
+}
+
+.resolution-form-panel h2,
+.resolution-preview h2,
+.resolution-success h2 {
+  margin: 0 0 18px;
+  color: #0f69b4;
+  font-size: 19px;
+}
+
+.resolution-form-panel > label {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.resolution-form-panel input,
+.resolution-form-panel textarea,
+.resolution-steps-editor input,
+.resolution-preview textarea {
+  border: 1px solid #bfc7d0;
+  border-radius: 5px;
+  background: #fff;
+  color: #222;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.resolution-form-panel textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.resolution-steps-editor {
+  display: grid;
+  gap: 9px;
+}
+
+.resolution-steps-editor label {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.resolution-steps-editor span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e6f0f9;
+  color: #0f69b4;
+  font-weight: 800;
+}
+
+.resolution-preview > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.resolution-preview > div span {
+  color: #66717c;
+  font-size: 12px;
+}
+
+.resolution-preview textarea {
+  width: 100%;
+  min-height: 620px;
+  resize: vertical;
+  background: #f8fafc;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.resolution-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.resolution-success {
+  border-color: #86c99a;
+  background: #f0fff4;
+}
+
+.resolution-success p {
+  color: #395d44;
+}
+
+.resolution-success > div {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.resolution-success button {
+  border: 1px solid #147d2b;
+  border-radius: 4px;
+  background: #147d2b;
+  color: #fff;
+  padding: 9px 14px;
+  font-weight: 700;
+}
+
+.button-link-inline {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 @media (max-width: 980px) {
   .filters {
     grid-template-columns: 1fr;
+  }
+
+  .resolution-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resolution-header,
+  .resolution-success > div {
+    display: grid;
   }
 }

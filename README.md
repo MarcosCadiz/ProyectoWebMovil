@@ -126,6 +126,20 @@ DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
 
 Si `DATABASE_URL` no esta configurado o PostgreSQL no esta disponible, la API puede funcionar con datos en memoria para pruebas locales.
 
+Para un equipo de trabajo se recomienda una base PostgreSQL remota. Cada integrante debe guardar la misma URL en su archivo local `.env`:
+
+```txt
+DATABASE_URL=postgresql://USUARIO:CONTRASENA@HOST-REMOTO/NOMBRE_BASE?sslmode=require
+DATABASE_SSL=true
+```
+
+La URL es secreta y nunca debe incluirse en GitHub. Luego se prepara y verifica la base con:
+
+```bash
+npm run db:migrate
+npm run db:verify
+```
+
 ## Ejecucion
 
 Levantar frontend:
@@ -323,6 +337,7 @@ Documentos complementarios:
 
 - [Endpoints API](./docs/api-endpoints.md)
 - [Modelo relacional](./docs/modelo-relacional.md)
+- [Evidencia final EF1-EF5](./docs/evidencia-final-ef1-ef5.md)
 - [Coleccion Postman](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
 ## Estado actual
