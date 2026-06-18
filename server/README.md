@@ -1,125 +1,110 @@
 # API DOM Santo Domingo
 
-Servidor Node.js/Express para autenticacion, rutas base del proyecto, tokens JWT y manejo inicial de datos DOM.
+API REST Node.js/Express para autenticación, usuarios, trámites, documentos, resoluciones y notificaciones.
 
-## Comandos
+## Inicio
+
+Desde la raíz:
 
 ```bash
+npm install
+Copy-Item .env.example .env
 npm run dev:api
 ```
 
-La API queda disponible en:
+Base URL:
 
-```txt
+```text
 http://127.0.0.1:4000/api
 ```
 
-## Variables de entorno
+## Configuración
 
-Crear `.env` desde `.env.example`:
-
-```bash
-copy .env.example .env
-```
-
-Variables principales:
-
-```txt
+```dotenv
 API_PORT=4000
 CORS_ORIGIN=http://127.0.0.1:5173
 JWT_ISSUER=dom-santo-domingo-api
 JWT_AUDIENCE=dom-santo-domingo-client
 JWT_EXPIRES_IN=2h
-DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
+DATABASE_URL=postgresql://USUARIO:CONTRASENA@HOST/NOMBRE_BASE
+DATABASE_SSL=true
 ```
 
-## Base de datos
+`CORS_ORIGIN` admite una lista separada por comas. Use `DATABASE_SSL=false` para PostgreSQL local sin TLS.
 
-El modelo relacional PostgreSQL esta definido en:
+## Capas
 
-```txt
-database/postgresql/schema.sql
-database/postgresql/seed.sql
-docs/modelo-relacional.md
+```text
+routes → middleware → controllers → services/data → PostgreSQL
 ```
 
-Comandos sugeridos:
+- `app.js`: middleware global y rutas.
+- `config`: entorno, conexión y JWT.
+- `middleware`: autenticación, rol, seguridad y errores.
+- `controllers`: respuestas HTTP.
+- `services`: validación, tokens, hashing y esquema.
+- `data`: persistencia PostgreSQL/fallback.
 
-```bash
-createdb dom_santo_domingo
-psql -d dom_santo_domingo -f database/postgresql/schema.sql
-psql -d dom_santo_domingo -f database/postgresql/seed.sql
+## Endpoints
+
+```text
+GET  /health
+GET  /jwks
+POST /auth/register
+POST /auth/login
+
+GET  /users/me
+GET  /users
+
+GET    /tramites
+POST   /tramites
+GET    /tramites/:id
+PUT    /tramites/:id
+PATCH  /tramites/:id
+DELETE /tramites/:id
+POST   /tramites/:id/decision
+
+GET   /notifications
+PATCH /notifications/:id/read
+PATCH /notifications/read-all
 ```
 
-Estado actual: el backend sigue funcionando con datos en memoria mientras se conecta la capa persistente real. Esto permite probar el frontend y la API aunque PostgreSQL no este levantado.
+Excepto health, JWKS y autenticación, las rutas requieren:
 
-## Usuarios demo
-
-```txt
-Usuario:
-RUT: 12.345.678-9
-Password: Usuario123
-
-Funcionario:
-RUT: 9.876.543-2
-Password: Funcionario123
-```
-
-## Rutas publicas
-
-```txt
-GET  /api/health
-GET  /api/jwks
-GET  /api/.well-known/jwks.json
-POST /api/auth/register
-POST /api/auth/login
-```
-
-## Rutas protegidas
-
-Enviar el token en el header:
-
-```txt
+```text
 Authorization: Bearer <accessToken>
 ```
 
-```txt
-GET  /api/users/me
-GET  /api/users              Solo funcionario
-GET  /api/tramites
-POST /api/tramites
+`GET /users` y `POST /tramites/:id/decision` requieren rol `funcionario`.
+
+## Seguridad
+
+- bcrypt.
+- JWT RS256 y JWKS.
+- Control de rol y propiedad.
+- CORS por lista blanca.
+- Rate limiting.
+- Payload máximo de 1 MB.
+- Validación de datos y bloqueo XSS.
+- Cabeceras defensivas.
+- Consultas SQL parametrizadas.
+- TLS verificable para PostgreSQL remoto.
+
+## Persistencia
+
+```bash
+npm run db:migrate
+npm run db:verify
 ```
 
-## Pruebas Postman
+Si la base no está disponible, la API usa memoria temporal y registra una advertencia. Este modo no debe utilizarse como persistencia productiva.
 
-Coleccion:
+## Pruebas
 
-```txt
-postman/DOM_Santo_Domingo_API.postman_collection.json
+```bash
+npm run test:api
 ```
 
-La coleccion valida:
+La prueba cubre JWT, roles, CRUD, documentos, resoluciones, notificaciones, paginación, XSS y errores controlados.
 
-- Estado de API.
-- JWKS.
-- Login usuario y funcionario.
-- Registro.
-- Rutas protegidas con token.
-- Rutas por rol.
-- Creacion/listado de tramites.
-- Errores esperados sin token, credenciales invalidas y body incompleto.
-
-Importar la coleccion en Postman y ejecutar en orden. La variable `baseUrl` viene configurada como:
-
-```txt
-http://127.0.0.1:4000/api
-```
-
-## Token
-
-El login devuelve un JWT firmado con RS256. La clave publica se expone como JWK/JWKS en:
-
-```txt
-/api/jwks
-/api/.well-known/jwks.json
-```
+Documentación detallada: [../docs/api-endpoints.md](../docs/api-endpoints.md).

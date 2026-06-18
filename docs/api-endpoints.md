@@ -1,4 +1,12 @@
-# Documentacion de endpoints API
+# Referencia de endpoints — API DOM Santo Domingo
+
+Contrato HTTP de la API Express. Salvo que se indique lo contrario, las respuestas utilizan JSON y los errores siguen el formato:
+
+```json
+{
+  "error": "CODIGO_DE_ERROR"
+}
+```
 
 Base local:
 
@@ -144,13 +152,27 @@ Todas las rutas requieren token Bearer.
 
 ### GET /tramites
 
-Lista tramites disponibles.
+Lista los trámites accesibles para el usuario autenticado. Un ciudadano solo recibe sus propios expedientes; un funcionario puede consultar todos.
+
+Parámetros opcionales:
+
+| Parámetro | Descripción | Regla |
+|---|---|---|
+| `limit` | Cantidad máxima | 1 a 100; por defecto 50 |
+| `offset` | Desplazamiento | Mayor o igual a 0 |
+| `status` | Estado exacto | Ejemplo: `En Revision` |
+| `search` | Búsqueda | Código, tipo o solicitante |
 
 Respuesta `200`:
 
 ```json
 {
-  "tramites": []
+  "tramites": [],
+  "pagination": {
+    "limit": 50,
+    "offset": 0,
+    "returned": 0
+  }
 }
 ```
 
@@ -163,7 +185,18 @@ Body:
 ```json
 {
   "tipo": "Permiso de Obra Menor",
-  "descripcion": "Solicitud de prueba"
+  "direccion": "Las Araucarias 450, Santo Domingo",
+  "descripcion": "Solicitud de prueba",
+  "observaciones": "Sin observaciones",
+  "contenidoSolicitud": "Formulario digital generado",
+  "documents": [
+    {
+      "name": "Plano.pdf",
+      "category": "Plano",
+      "size": "120 KB",
+      "content": "Contenido demostrativo"
+    }
+  ]
 }
 ```
 
@@ -185,6 +218,10 @@ Respuesta `201`:
 Errores:
 
 - `400 TRAMITE_TYPE_REQUIRED`
+- `400 INVALID_TRAMITE_PAYLOAD`
+- `400 INVALID_DOCUMENT`
+- `400 TOO_MANY_DOCUMENTS`
+- `413 DOCUMENT_TOO_LARGE`
 - `401 AUTH_TOKEN_REQUIRED`
 
 ### GET /tramites/:id
@@ -213,7 +250,7 @@ Errores:
 
 ### PUT /tramites/:id
 
-Actualiza los datos editables de un tramite. Acepta `tipo`, `descripcion` y `estado`.
+Actualiza los datos editables de un trámite. Acepta `tipo`, `descripcion`, `estado` y `observaciones`.
 
 Body:
 
@@ -315,6 +352,58 @@ Cuando `DATABASE_URL` esta configurada, la API guarda:
 
 Usuarios y funcionarios consultan la misma fuente mediante la API. Si PostgreSQL no esta configurado, se utiliza el mismo contrato con almacenamiento temporal en memoria.
 
+## Notificaciones
+
+Todas las rutas requieren token Bearer.
+
+### GET /notifications
+
+Lista hasta 100 notificaciones del usuario autenticado, ordenadas desde la más reciente.
+
+Respuesta `200`:
+
+```json
+{
+  "notifications": [
+    {
+      "id": "uuid",
+      "tramiteId": "TR-45092",
+      "title": "Tramite Aprobado",
+      "body": "La solicitud TR-45092 fue aprobada.",
+      "readAt": null,
+      "createdAt": "2026-06-18T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+### PATCH /notifications/:id/read
+
+Marca una notificación propia como leída.
+
+Errores:
+
+- `401 AUTH_TOKEN_REQUIRED`
+- `404 NOTIFICATION_NOT_FOUND`
+
+### PATCH /notifications/read-all
+
+Marca todas las notificaciones del usuario como leídas.
+
+Respuesta:
+
+```text
+204 No Content
+```
+
+## Controles transversales
+
+- Body JSON máximo: 1 MB.
+- Rate limit: 120 solicitudes por minuto e IP.
+- CORS mediante lista blanca.
+- Rechazo de patrones XSS.
+- Respuestas de error con `{ "error": "CODIGO" }`.
+
 ## Pruebas Postman
 
 Coleccion:
@@ -333,7 +422,7 @@ Orden recomendado:
 6. POST tramites.
 7. GET tramite por ID.
 8. PATCH/PUT tramite.
-9. DELETE tramite.
-10. Login funcionario.
-11. GET users.
-12. Pruebas negativas de token, login invalido y body invalido.
+9. Emitir resolución con funcionario.
+10. Consultar y marcar notificaciones.
+11. DELETE trámite.
+12. Pruebas negativas de token, XSS, login inválido y body inválido.

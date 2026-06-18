@@ -1,17 +1,29 @@
-# Evidencia basica de Docker
+# Evidencia básica de Docker
 
-Fecha de revision: 18 de junio de 2026.
+Fecha de revisión: 18 de junio de 2026.
 
-## Configuracion incluida
+## Resultado ejecutivo
+
+| Verificación | Resultado |
+|---|---|
+| Cliente Docker | Instalado |
+| Docker Compose | Instalado |
+| Sintaxis Compose | Correcta |
+| Resolución de servicios | Correcta |
+| Build e inicio de contenedores | No ejecutado por daemon/WSL 2 ausente |
+
+Este documento no presenta el despliegue como exitoso. Registra la configuración validada y la limitación concreta del equipo de prueba.
+
+## Configuración incluida
 
 - `Dockerfile.backend`: imagen Node.js 22 Alpine para la API Express.
-- `Dockerfile.frontend`: compilacion Vite en Node.js y publicacion con Nginx.
-- `docker-compose.yml`: orquestacion de PostgreSQL, backend y frontend.
+- `Dockerfile.frontend`: compilación Vite en Node.js y publicación con Nginx.
+- `docker-compose.yml`: orquestación de PostgreSQL, backend y frontend.
 - `docker/nginx.conf`: soporte de rutas SPA y proxy `/api` hacia el backend.
 - Healthchecks para los tres servicios.
 - Volumen persistente para PostgreSQL.
 
-## Validaciones basicas
+## Validaciones básicas
 
 Comandos utilizados:
 
@@ -27,14 +39,14 @@ Resultado:
 docker compose config --quiet -> OK
 Servicios resueltos: database, backend, frontend
 Imagen externa: postgres:16-alpine
-Imagenes construibles: figma-backend, figma-frontend
+Imágenes construibles: figma-backend, figma-frontend
 ```
 
-La configuracion Compose se valida sin errores y resuelve los servicios, redes, volumen, variables, dependencias, puertos y healthchecks.
+La configuración Compose se valida sin errores y resuelve los servicios, red, volumen, variables, dependencias, puertos y healthchecks.
 
 ## Prueba de inicio
 
-Se intento consultar el motor con:
+Se intentó consultar el motor con:
 
 ```bash
 docker version
@@ -44,14 +56,14 @@ docker compose up --build -d
 Resultado del intento:
 
 ```txt
-El cliente Docker y Docker Compose estan instalados.
-El daemon docker_engine no esta disponible.
-Windows informa adicionalmente que WSL no esta instalado.
+El cliente Docker y Docker Compose están instalados.
+El daemon docker_engine no está disponible.
+Windows informa adicionalmente que WSL no está instalado.
 ```
 
-Por lo tanto, no fue posible descargar `postgres:16-alpine` ni iniciar los contenedores en este equipo. Esta es una limitacion del entorno local, no un error de sintaxis de los archivos Docker.
+Por lo tanto, no fue posible descargar `postgres:16-alpine` ni iniciar los contenedores en este equipo. Esta es una limitación del entorno local, no un error de sintaxis de los archivos Docker.
 
-Una vez habilitado WSL 2 y abierto Docker Desktop, la comprobacion minima pendiente es:
+Una vez habilitado WSL 2 y abierto Docker Desktop, la comprobación mínima pendiente es:
 
 ```bash
 docker compose up --build -d

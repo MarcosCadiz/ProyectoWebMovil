@@ -1,110 +1,109 @@
-﻿# Plataforma DOM en Linea - Municipalidad de Santo Domingo
+# Plataforma DOM en Línea — Municipalidad de Santo Domingo
 
-Proyecto web y movil para digitalizar la gestion de tramites de la Direccion de Obras Municipales (DOM) de la Municipalidad de Santo Domingo.
+Aplicación web para digitalizar la gestión de solicitudes de la Dirección de Obras Municipales (DOM). Integra frontend React, API REST Express, autenticación JWT, persistencia PostgreSQL, notificaciones, revisión de expedientes, emisión de resoluciones y una configuración Docker reproducible.
 
-La plataforma permite separar el acceso de usuarios ciudadanos y funcionarios DOM, registrar nuevos usuarios, iniciar sesion con JWT, proteger rutas privadas, consultar tramites y preparar la base para persistencia en PostgreSQL.
-
-## Integrantes
+## Equipo
 
 - Milovan Fuentes
 - Amaro Fibla
 - Marcos Cadiz
 
-## Proposito
+## Estado del proyecto
 
-El objetivo del proyecto es mejorar la gestion DOM mediante una plataforma digital que reduzca tiempos de respuesta, mejore la trazabilidad de solicitudes, ordene la comunicacion entre usuarios y funcionarios, y centralice documentos, observaciones, estados y notificaciones.
+El sistema implementa:
 
-## Tecnologias principales
+- Registro e inicio de sesión para ciudadanos y funcionarios.
+- JWT firmado con RS256, rutas privadas y autorización por rol.
+- CRUD de trámites desde la interfaz y la API.
+- Adjuntos y formulario digital asociados al expediente.
+- Bandeja DOM con búsqueda y filtrado.
+- Checklist normativo y emisión de resoluciones.
+- Notificaciones persistentes ante decisiones del funcionario.
+- PostgreSQL local o remoto, con fallback temporal en memoria.
+- Integración cartográfica con OpenStreetMap.
+- Medidas de seguridad para CORS, XSS, SQL injection, payloads y rate limiting.
+- Build de producción, smoke test automatizado y verificación de base de datos.
+- Dockerfiles separados y Compose para frontend, API y PostgreSQL.
 
-Frontend:
+## Tecnologías
 
-- React
-- Vite
-- React Router DOM
-- Axios
-- CSS modularizado
+| Área | Tecnologías |
+|---|---|
+| Frontend | React 19, Vite, React Router, Axios, CSS |
+| Backend | Node.js, Express 5 |
+| Autenticación | bcrypt, JWT RS256, JWK/JWKS |
+| Base de datos | PostgreSQL, driver `pg`, Neon compatible |
+| Infraestructura | Docker, Docker Compose, Nginx |
+| Pruebas | Smoke test Node.js, Postman/Insomnia |
+| Servicio externo | OpenStreetMap |
 
-Backend:
+## Arquitectura
 
-- Node.js
-- Express
-- bcrypt
-- JWT con RS256
-- JWK/JWKS
-- PostgreSQL con fallback en memoria
-- dotenv
-- CORS
+```text
+Navegador
+   │
+   ├── React + Vite
+   │      └── Axios + interceptor JWT
+   │
+   └── /api
+          └── Express
+                ├── autenticación y roles
+                ├── validación y seguridad
+                ├── trámites, documentos y resoluciones
+                ├── notificaciones
+                └── PostgreSQL / fallback en memoria
+```
 
-Herramientas:
+## Estructura
 
-- Visual Studio Code
-- npm
-- Git / GitHub
-- Postman o Insomnia
-
-## Estructura resumida
-
-```txt
+```text
 .
-|-- src/                     Frontend React
-|   |-- components/           Componentes reutilizables
-|   |-- features/             Modulos por dominio
-|   |-- pages/                Pantallas principales
-|   |-- routes/               Rutas publicas y protegidas
-|   |-- services/             Cliente API, auth y sesion
-|   `-- styles/               Estilos por flujo
-|-- server/                  Backend Node.js/Express
-|   |-- config/               Configuracion de base de datos
-|   |-- controllers/          Controladores HTTP
-|   |-- data/                 Store en memoria/PostgreSQL
-|   |-- middleware/           Auth, roles y errores
-|   |-- routes/               Rutas API
-|   `-- services/             Auth, JWT, seed y base de datos
-|-- database/postgresql/     Schema, seed y migraciones
-|-- docs/                    Documentacion tecnica e informe
-|-- postman/                 Coleccion de pruebas API
-|-- package.json
-`-- .env.example
+├── src/                         Frontend React
+│   ├── components/              Componentes reutilizables
+│   ├── features/                Módulos funcionales
+│   ├── pages/                   Vistas
+│   ├── routes/                  Rutas públicas y protegidas
+│   ├── services/                API, sesión y lógica cliente
+│   └── styles/                  Estilos responsivos
+├── server/                      API Express
+│   ├── config/                  Entorno, JWT y PostgreSQL
+│   ├── controllers/             Controladores HTTP
+│   ├── data/                    Persistencia
+│   ├── middleware/              Auth, seguridad y errores
+│   ├── routes/                  Endpoints REST
+│   └── services/                Lógica de negocio
+├── database/postgresql/         Esquema, seed y migraciones
+├── docs/                        Informe y documentación
+├── postman/                     Colección API
+├── scripts/                     Migración y verificaciones
+├── Dockerfile.backend
+├── Dockerfile.frontend
+└── docker-compose.yml
 ```
 
-## Prerrequisitos
+## Requisitos
 
-Antes de instalar el proyecto, asegúrate de tener:
+- Node.js 22 o una versión LTS compatible.
+- npm.
+- Git.
+- PostgreSQL, local o remoto, si se requiere persistencia.
+- Docker Desktop con WSL 2 en Windows, solo para ejecución mediante contenedores.
 
-- Node.js en version LTS.
-- npm instalado junto con Node.js.
-- Visual Studio Code u otro editor de codigo.
-- Git para clonar y versionar el repositorio.
-
-Puedes verificar Node.js y npm con:
-
-```bash
-node -v
-npm -v
-```
-
-## Instalacion
-
-Clonar el repositorio:
+## Instalación
 
 ```bash
 git clone https://github.com/MarcosCadiz/ProyectoWebMovil.git
 cd ProyectoWebMovil
-```
-
-Instalar dependencias:
-
-```bash
 npm install
 ```
 
-Crear el archivo de variables de entorno:
+Crear la configuración local:
 
-```bash
-copy .env.example .env
+```powershell
+Copy-Item .env.example .env
 ```
 
-En Linux/macOS:
+En Linux o macOS:
 
 ```bash
 cp .env.example .env
@@ -112,152 +111,124 @@ cp .env.example .env
 
 ## Variables de entorno
 
-El archivo `.env.example` sirve como plantilla. Copialo como `.env` y completa los valores necesarios para tu entorno local.
-
-Ejemplo general:
-
-```txt
-PORT=4000
-CLIENT_URL=http://127.0.0.1:5173
-JWT_ISSUER=dom-santo-domingo
+```dotenv
+API_PORT=4000
+CORS_ORIGIN=http://127.0.0.1:5173
+JWT_ISSUER=dom-santo-domingo-api
 JWT_AUDIENCE=dom-santo-domingo-client
-DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/dom_santo_domingo
-```
-
-Si `DATABASE_URL` no esta configurado o PostgreSQL no esta disponible, la API puede funcionar con datos en memoria para pruebas locales.
-
-Para un equipo de trabajo se recomienda una base PostgreSQL remota. Cada integrante debe guardar la misma URL en su archivo local `.env`:
-
-```txt
-DATABASE_URL=postgresql://USUARIO:CONTRASENA@HOST-REMOTO/NOMBRE_BASE?sslmode=require
+JWT_EXPIRES_IN=2h
+DATABASE_URL=postgresql://USUARIO:CONTRASENA@HOST/NOMBRE_BASE?sslmode=require
 DATABASE_SSL=true
 ```
 
-La URL es secreta y nunca debe incluirse en GitHub. Luego se prepara y verifica la base con:
+Notas:
+
+- `CORS_ORIGIN` admite varios orígenes separados por comas.
+- Para PostgreSQL local puede usarse `DATABASE_SSL=false`.
+- `.env` está excluido de Git y nunca debe contenerse en commits.
+- Si PostgreSQL no está disponible, la API mantiene un fallback en memoria para desarrollo.
+
+## Ejecución local
+
+Terminal 1 — API:
+
+```bash
+npm run dev:api
+```
+
+Terminal 2 — frontend:
+
+```bash
+npm run dev
+```
+
+Direcciones:
+
+- Frontend: `http://127.0.0.1:5173`
+- API: `http://127.0.0.1:4000/api`
+- Healthcheck: `http://127.0.0.1:4000/api/health`
+
+## Base de datos
+
+Aplicar el esquema y verificar la conexión configurada en `.env`:
 
 ```bash
 npm run db:migrate
 npm run db:verify
 ```
 
-## Ejecucion
+El modelo incluye:
 
-Levantar frontend:
+- `users`
+- `tramites`
+- `tramite_documentos`
+- `tramite_resoluciones`
+- `tramite_mensajes`
+- `notifications`
+- `audit_events`
 
-```bash
-npm run dev
-```
+## Docker
 
-URL frontend:
-
-```txt
-http://127.0.0.1:5173
-```
-
-Levantar backend en otra terminal:
-
-```bash
-npm run dev:api
-```
-
-URL API:
-
-```txt
-http://127.0.0.1:4000/api
-```
-
-Compilar frontend:
-
-```bash
-npm run build
-```
-
-## Ejecucion basica con Docker
-
-La configuracion incluye contenedores separados para PostgreSQL, API y frontend:
+Validar la configuración:
 
 ```bash
 docker compose config --quiet
+```
+
+Construir e iniciar:
+
+```bash
 docker compose up --build -d
 docker compose ps
 ```
 
-Cuando el motor Docker esta activo:
+Servicios:
 
-```txt
-Frontend: http://localhost:8080
-API:      http://localhost:4000/api/health
-```
+- Frontend: `http://localhost:8080`
+- API: `http://localhost:4000/api/health`
+- PostgreSQL: red interna de Compose.
 
-Para detener los servicios:
+Detener:
 
 ```bash
 docker compose down
 ```
 
-La validacion basica y las limitaciones del equipo usado para la entrega estan registradas en [docs/evidencia-docker.md](./docs/evidencia-docker.md).
+La sintaxis de Compose fue validada. La ejecución local en el equipo de entrega quedó bloqueada porque Docker Desktop no tenía disponible el daemon de WSL 2; la evidencia exacta está en [docs/evidencia-docker.md](./docs/evidencia-docker.md).
 
-## Scripts disponibles
+## Scripts
 
-```txt
-npm run dev        Levanta el frontend con Vite
-npm run dev:web    Alias para frontend
-npm run dev:api    Levanta la API Node.js/Express
-npm run start:api  Levanta la API en modo normal
-npm run build      Compila el frontend
-npm run preview    Previsualiza la build
-npm run test:api   Ejecuta prueba smoke de API, JWT, roles y CRUD
-```
+| Comando | Descripción |
+|---|---|
+| `npm run dev` | Inicia el frontend |
+| `npm run dev:api` | Inicia la API |
+| `npm run build` | Genera el build de producción |
+| `npm run preview` | Sirve el build localmente |
+| `npm run test:api` | Ejecuta el smoke test integral |
+| `npm run db:migrate` | Aplica el esquema PostgreSQL |
+| `npm run db:verify` | Verifica conexión y tablas principales |
 
 ## Flujos principales
 
-Usuario ciudadano:
+Ciudadano:
 
-```txt
-Inicio -> Login Usuario -> Registro Usuario -> Menu Usuario -> Solicitudes / Notificaciones / Documentos / Chat
+```text
+Registro/Login → Menú → Nueva solicitud → Adjuntos
+→ Mis solicitudes → Detalle → Notificaciones/Resolución
 ```
 
-Funcionario DOM:
+Funcionario:
 
-```txt
-Inicio -> Login Funcionario -> Registro Funcionario -> Menu Funcionario -> Revision de solicitudes
+```text
+Login → Bandeja DOM → Búsqueda/Filtro → Revisión
+→ Checklist → Aprobación/Rechazo/Observación → Notificación
 ```
 
-Autenticacion:
+## API resumida
 
-```txt
-Registro/Login -> API Auth -> bcrypt/JWT -> token en navegador -> rutas protegidas -> validacion de rol
-```
+Públicos:
 
-Base de datos:
-
-```txt
-API Express -> servicios -> PostgreSQL con consultas parametrizadas -> fallback en memoria si no hay conexion
-```
-
-## Rutas principales del frontend
-
-```txt
-/                     Inicio
-/login-usuario        Login ciudadano
-/login-funcionario    Login funcionario
-/registro             Selector de tipo de registro
-/registro-usuario     Registro ciudadano
-/registro-funcionario Registro funcionario
-/menu-usuario         Panel del usuario
-/menu-funcionario     Panel del funcionario
-/mis-solicitudes      Solicitudes del usuario
-/notificaciones       Centro de notificaciones
-/subir-archivos       Carga de documentos
-/chat-audiencia       Mensajeria
-/revision-solicitudes Revision DOM
-```
-
-## API principal
-
-Rutas publicas:
-
-```txt
+```text
 GET  /api/health
 GET  /api/jwks
 GET  /api/.well-known/jwks.json
@@ -265,107 +236,79 @@ POST /api/auth/register
 POST /api/auth/login
 ```
 
-Rutas protegidas:
+Protegidos:
 
-```txt
-GET  /api/users/me
-GET  /api/tramites
-POST /api/tramites
-GET  /api/tramites/:id
-PUT  /api/tramites/:id
-PATCH /api/tramites/:id
+```text
+GET    /api/users/me
+GET    /api/tramites
+POST   /api/tramites
+GET    /api/tramites/:id
+PUT    /api/tramites/:id
+PATCH  /api/tramites/:id
 DELETE /api/tramites/:id
+GET    /api/notifications
+PATCH  /api/notifications/:id/read
+PATCH  /api/notifications/read-all
 ```
 
-Ruta protegida por rol funcionario:
+Funcionario:
 
-```txt
-GET /api/users
+```text
+GET  /api/users
+POST /api/tramites/:id/decision
 ```
 
-La documentacion completa de endpoints esta en [docs/api-endpoints.md](./docs/api-endpoints.md).
+Contrato completo: [docs/api-endpoints.md](./docs/api-endpoints.md).
 
 ## Seguridad
 
-El proyecto implementa:
+- Contraseñas protegidas con bcrypt.
+- JWT RS256 y publicación de JWKS.
+- Autenticación y autorización por rol.
+- Consultas PostgreSQL parametrizadas.
+- CORS mediante lista blanca.
+- Rate limit por dirección IP.
+- Límite de body JSON de 1 MB.
+- Validación de tamaños, tipos y campos.
+- Rechazo explícito de patrones XSS.
+- Cabeceras CSP, `nosniff`, `DENY` y políticas restrictivas.
+- TLS verificable para PostgreSQL remoto.
+- Respuestas de error sin stack traces ni datos sensibles.
 
-- Hash de contrasenas con bcrypt.
-- Tokens JWT firmados con RS256.
-- Publicacion de clave publica mediante JWK/JWKS.
-- Rutas protegidas con header `Authorization: Bearer <token>`.
-- Validacion de roles para separar usuario ciudadano y funcionario.
-- Consultas parametrizadas en PostgreSQL para reducir riesgo de inyeccion SQL.
-- Manejo centralizado de errores para evitar caidas por entradas invalidas.
-
-## Pruebas API
-
-La coleccion Postman esta disponible en:
-
-[postman/DOM_Santo_Domingo_API.postman_collection.json](./postman/DOM_Santo_Domingo_API.postman_collection.json)
-
-La coleccion permite validar healthcheck, login, registro, rutas protegidas, control de roles, CRUD de tramites y errores esperados.
-
-Para ejecutarla:
+## Verificación
 
 ```bash
-npm run dev:api
-```
-
-Luego importar la coleccion en Postman o Insomnia y ejecutar los requests en orden.
-
-Tambien se puede ejecutar una verificacion automatizada local:
-
-```bash
+npm run build
 npm run test:api
+npm run db:verify
+docker compose config --quiet
 ```
 
-## Base de datos
-
-Archivos principales:
-
-- [database/postgresql/schema.sql](./database/postgresql/schema.sql)
-- [database/postgresql/seed.sql](./database/postgresql/seed.sql)
-- [database/postgresql/migrations](./database/postgresql/migrations)
-- [docs/modelo-relacional.md](./docs/modelo-relacional.md)
-
-Crear base local:
-
-```bash
-createdb dom_santo_domingo
-psql -d dom_santo_domingo -f database/postgresql/schema.sql
-psql -d dom_santo_domingo -f database/postgresql/seed.sql
-```
+El smoke test cubre JWT, roles, CRUD, documentos, resoluciones, notificaciones, paginación, bloqueo de XSS y errores controlados.
 
 ## Usuarios demo
 
-Usuario ciudadano:
+| Rol | RUT | Contraseña |
+|---|---|---|
+| Ciudadano | `12.345.678-9` | `Usuario123` |
+| Funcionario | `9.876.543-2` | `Funcionario123` |
 
-```txt
-RUT: 12.345.678-9
-Password: Usuario123
-```
+Estas cuentas son exclusivamente de demostración.
 
-Funcionario DOM:
+## Documentación
 
-```txt
-RUT: 9.876.543-2
-Password: Funcionario123
-```
-
-## Documentacion tecnica completa
-
-El README resume lo necesario para instalar, ejecutar y comprender el proyecto. Los detalles extensos de arquitectura, backend, frontend, consumo de API, interceptores, seguridad, inyeccion SQL, pruebas API, modelo relacional y evidencias estan en el informe tecnico:
-
-[Ver informe tecnico del proyecto](./docs/Informe_Proyecto_DOM_Santo_Domingo.md)
-
-Documentos complementarios:
-
-- [Endpoints API](./docs/api-endpoints.md)
+- [Informe técnico completo](./docs/Informe_Proyecto_DOM_Santo_Domingo.md)
+- [Endpoints de la API](./docs/api-endpoints.md)
 - [Modelo relacional](./docs/modelo-relacional.md)
-- [Evidencia final EF1-EF5](./docs/evidencia-final-ef1-ef5.md)
-- [Evidencia basica Docker](./docs/evidencia-docker.md)
-- [Coleccion Postman](./postman/DOM_Santo_Domingo_API.postman_collection.json)
+- [Matriz y evidencia EF1–EF6](./docs/evidencia-final-ef1-ef6.md)
+- [Evidencia Docker](./docs/evidencia-docker.md)
+- [Revisión de rúbrica anterior](./docs/revision-rubrica-entrega-parcial-2.md)
+- [Colección Postman](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
-## Estado actual
+## Limitaciones conocidas
 
-El proyecto cuenta con frontend funcional, backend Express, autenticacion con JWT, registro de usuarios y funcionarios, rutas protegidas, validacion de roles, modelo relacional PostgreSQL, coleccion Postman y documentacion tecnica para el segundo avance.
+- Los archivos adjuntos se representan como metadatos y contenido demostrativo; no existe almacenamiento binario productivo.
+- El chat conserva comportamiento demostrativo y no constituye mensajería en tiempo real.
+- El fallback en memoria no sustituye PostgreSQL en producción.
+- No se ejecutó el runtime de Docker en el equipo de entrega por ausencia del daemon WSL 2.
+- Antes de producción deben externalizarse las claves JWT, incorporar rotación, observabilidad y pruebas de carga.

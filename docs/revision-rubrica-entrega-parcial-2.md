@@ -1,5 +1,7 @@
 # Revision de Rubrica - Entrega Parcial 2
 
+> Documento histórico: corresponde al análisis de una evaluación anterior. Para el estado técnico vigente, consultar el [informe final](./Informe_Proyecto_DOM_Santo_Domingo.md) y la [matriz EF1–EF6](./evidencia-final-ef1-ef6.md).
+
 ## Contexto
 
 Se reviso la calificacion aplicada al proyecto **ProyectoWebMovil** para la Entrega Parcial 2.
