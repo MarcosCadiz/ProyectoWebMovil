@@ -1,0 +1,64 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: dom_santo_domingo
+      POSTGRES_USER: dom_app
+      POSTGRES_PASSWORD: dom_local_password
+    volumes:
+      - dom_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dom_app -d dom_santo_domingo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      API_PORT: 4000
+      CORS_ORIGIN: http://localhost:8080
+      JWT_ISSUER: dom-santo-domingo-api
+      JWT_AUDIENCE: dom-santo-domingo-client
+      JWT_EXPIRES_IN: 2h
+      DATABASE_URL: postgresql://dom_app:dom_local_password@database:5432/dom_santo_domingo
+      DATABASE_SSL: "false"
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:4000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  dom_postgres_data:

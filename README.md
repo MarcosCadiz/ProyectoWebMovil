@@ -172,6 +172,31 @@ Compilar frontend:
 npm run build
 ```
 
+## Ejecucion basica con Docker
+
+La configuracion incluye contenedores separados para PostgreSQL, API y frontend:
+
+```bash
+docker compose config --quiet
+docker compose up --build -d
+docker compose ps
+```
+
+Cuando el motor Docker esta activo:
+
+```txt
+Frontend: http://localhost:8080
+API:      http://localhost:4000/api/health
+```
+
+Para detener los servicios:
+
+```bash
+docker compose down
+```
+
+La validacion basica y las limitaciones del equipo usado para la entrega estan registradas en [docs/evidencia-docker.md](./docs/evidencia-docker.md).
+
 ## Scripts disponibles
 
 ```txt
@@ -338,6 +363,7 @@ Documentos complementarios:
 - [Endpoints API](./docs/api-endpoints.md)
 - [Modelo relacional](./docs/modelo-relacional.md)
 - [Evidencia final EF1-EF5](./docs/evidencia-final-ef1-ef5.md)
+- [Evidencia basica Docker](./docs/evidencia-docker.md)
 - [Coleccion Postman](./postman/DOM_Santo_Domingo_API.postman_collection.json)
 
 ## Estado actual
