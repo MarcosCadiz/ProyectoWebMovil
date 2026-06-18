@@ -1,11 +1,7 @@
 import { Link } from 'react-router-dom';
 import { municipalAssets } from '../../data/assets';
 
-export default function LoginForm({ error, isLoading, onSubmit, registerPath, role = 'usuario' }) {
-  const demo = role === 'funcionario'
-    ? { rut: '9.876.543-2', password: 'Funcionario123' }
-    : { rut: '12.345.678-9', password: 'Usuario123' };
-
+export default function LoginForm({ error, isLoading, onSubmit, registerPath }) {
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -26,11 +22,6 @@ export default function LoginForm({ error, isLoading, onSubmit, registerPath, ro
       <div className="login-heading">
         <h2>Iniciar sesion</h2>
         <p>Ingresa tus credenciales para acceder</p>
-      </div>
-      <div className="demo-credentials" aria-label="Credenciales de demostracion">
-        <strong>Acceso demo</strong>
-        <span>RUT: {demo.rut}</span>
-        <span>Contrasena: {demo.password}</span>
       </div>
       <label>
         <span>RUT</span>

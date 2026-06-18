@@ -64,21 +64,6 @@
   font-size: 16px;
 }
 
-.demo-credentials {
-  display: grid;
-  gap: 4px;
-  margin: 0 0 20px;
-  border-left: 4px solid #0f69b4;
-  background: #eaf4fc;
-  color: #27445f;
-  padding: 12px 14px;
-  font-size: 13px;
-}
-
-.demo-credentials strong {
-  color: #0f69b4;
-}
-
 .login-form label {
   display: block;
   margin-bottom: 18px;
